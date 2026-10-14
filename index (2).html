@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Step 2: Multi-Item Invoice Creator (Travels, Electrician, Plumber)</title>
+
+  <!-- PART 1: CSS (Ellame ore index.html file-kulla thaan iruku) -->
+  <style>
+    :root {
+      --primary: #1e40af;
+      --primary-light: #dbeafe;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --border: #cbd5e1;
+      --accent: #047857;
+      --danger: #dc2626;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px 14px;
+      background-color: var(--bg);
+      color: var(--text);
+    }
+
+    .header-banner {
+      max-width: 980px;
+      margin: 0 auto 20px auto;
+      background: var(--primary);
+      color: #ffffff;
+      padding: 16px 22px;
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .header-banner h1 {
+      margin: 0;
+      font-size: 1.3rem;
+    }
+
+    .header-banner span {
+      font-size: 0.85rem;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 6px 12px;
+      border-radius: 999px;
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    @media (max-width: 780px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.08rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+      color: var(--primary);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.84rem;
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: var(--text);
+    }
+
+    select, input {
+      width: 100%;
+      padding: 9px 10px;
+      margin-bottom: 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.92rem;
+    }
+
+    /* Quick Preset Chips */
+    .preset-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .preset-chip {
+      background: #eff6ff;
+      color: var(--primary);
+      border: 1px solid #bfdbfe;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      width: auto;
+    }
+
+    .preset-chip:hover {
+      background: var(--primary-light);
+    }
+
+    /* Dynamic Item Rows */
+    .items-header {
+      display: grid;
+      grid-template-columns: 2fr 0.7fr 1fr 34px;
+      gap: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .item-row {
+      display: grid;
+      grid-template-columns: 2fr 0.7fr 1fr 34px;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .item-row input {
+      margin-bottom: 0;
+    }
+
+    .btn-remove {
+      background: #fee2e2;
+      color: var(--danger);
+      border: 1px solid #fecaca;
+      border-radius: 8px;
+      height: 36px;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .btn-remove:hover {
+      background: #fecaca;
+    }
+
+    .btn-add {
+      background: #eff6ff;
+      color: var(--primary);
+      border: 1px dashed var(--primary);
+      margin-top: 4px;
+      margin-bottom: 16px;
+      padding: 9px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .btn-add:hover {
+      background: var(--primary-light);
+    }
+
+    /* Invoice Preview Table Styling */
+    .invoice-box {
+      border: 2px dashed var(--border);
+      border-radius: 10px;
+      padding: 18px;
+      background: #fcfdff;
+    }
+
+    .invoice-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .service-badge {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.82rem;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .meta-info {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 0.88rem;
+    }
+
+    th {
+      background: #f1f5f9;
+      text-align: left;
+      padding: 8px;
+      border-bottom: 2px solid var(--border);
+      color: var(--text);
+    }
+
+    td {
+      padding: 8px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .num {
+      text-align: right;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .total-box {
+      margin-top: 12px;
+      padding: 12px;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header-banner">
+    <h1>QuickBill — Service Invoice Creator</h1>
+    <span>Step 2: Multiple Items, Qty × Price & GST</span>
+  </div>
+
+  <!-- PART 2: HTML (Input Form & Live Table Preview) -->
+  <div class="container">
+    <!-- Left Card: Form -->
+    <div class="card">
+      <h2>1. Enter Customer & Work Items</h2>
+
+      <div class="grid-2">
+        <div>
+          <label for="serviceType">Service Category</label>
+          <select id="serviceType" onchange="onCategoryChange()">
+            <option value="🚗 Travels & Cab Service">🚗 Travels & Cab Service</option>
+            <option value="⚡ Electrician Service">⚡ Electrician Service</option>
+            <option value="🔧 Plumber Service">🔧 Plumber Service</option>
+          </select>
+        </div>
+        <div>
+          <label for="invoiceNo">Invoice No.</label>
+          <input type="text" id="invoiceNo" value="INV-101" oninput="calculateBill()" />
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <label for="customerName">Customer Name</label>
+          <input type="text" id="customerName" placeholder="e.g., Ramesh Kumar" oninput="calculateBill()" />
+        </div>
+        <div>
+          <label for="customerPhone">Customer Phone</label>
+          <input type="tel" id="customerPhone" placeholder="e.g., 98765 43210" oninput="calculateBill()" />
+        </div>
+      </div>
+
+      <!-- Quick-Add Buttons based on selected Service -->
+      <label>Quick-Add Common Items (Click to add):</label>
+      <div class="preset-bar" id="presetBar"></div>
+
+      <!-- Multiple Bill Items List -->
+      <div class="items-header">
+        <span>Item / Work Description</span>
+        <span>Qty / KM</span>
+        <span>Rate (₹)</span>
+        <span></span>
+      </div>
+      <div id="itemsContainer"></div>
+
+      <button type="button" class="btn-add" onclick="addItemRow('', 1, '')">
+        + Add Another Item Row
+      </button>
+
+      <!-- Discount & GST -->
+      <div class="grid-2">
+        <div>
+          <label for="discount">Discount (₹)</label>
+          <input type="number" id="discount" value="0" min="0" oninput="calculateBill()" />
+        </div>
+        <div>
+          <label for="gstRate">GST (%)</label>
+          <select id="gstRate" onchange="calculateBill()">
+            <option value="0">0% (No GST)</option>
+            <option value="5">5% GST</option>
+            <option value="12">12% GST</option>
+            <option value="18">18% GST</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Card: Live Invoice Preview -->
+    <div class="card">
+      <h2>2. Live Customer Bill Preview</h2>
+      <div class="invoice-box">
+        <div class="invoice-top">
+          <span class="service-badge" id="outService">🚗 Travels & Cab Service</span>
+          <strong id="outInvNo">INV-101</strong>
+        </div>
+
+        <div class="meta-info">
+          <div><strong>Date:</strong> <span id="outDate">--</span></div>
+          <div><strong>Customer:</strong> <span id="outCustomer">Walk-in Customer</span> (<span id="outPhone">N/A</span>)</div>
+        </div>
+
+        <!-- Itemized Bill Table -->
+        <table>
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th class="num">Qty</th>
+              <th class="num">Rate</th>
+              <th class="num">Amount</th>
+            </tr>
+          </thead>
+          <tbody id="outItemsBody"></tbody>
+        </table>
+
+        <!-- Totals Breakdown -->
+        <div class="summary-row">
+          <span>Subtotal:</span>
+          <strong id="outSubtotal">₹0.00</strong>
+        </div>
+        <div class="summary-row">
+          <span>Discount:</span>
+          <strong id="outDiscount">- ₹0.00</strong>
+        </div>
+        <div class="summary-row">
+          <span>GST (<span id="outGstPercent">0</span>%):</span>
+          <strong id="outGstAmount">₹0.00</strong>
+        </div>
+
+        <div class="total-box">
+          <span>Grand Total</span>
+          <span id="outGrandTotal">₹0.00</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 3: JAVASCRIPT (Multiple Rows, Qty * Rate, GST & Presets) -->
+  <script>
+    // Set today's date
+    document.getElementById('outDate').innerText = new Date().toLocaleDateString('en-IN', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    });
+
+    // Presets for Travels, Electrician, and Plumber
+    const presets = {
+      '🚗 Travels & Cab Service': [
+        { desc: 'Base Trip Package', qty: 1, rate: 1500 },
+        { desc: 'Extra KM Charge', qty: 20, rate: 14 },
+        { desc: 'Toll & Parking Charges', qty: 1, rate: 180 },
+        { desc: 'Driver Bata', qty: 1, rate: 300 }
+      ],
+      '⚡ Electrician Service': [
+        { desc: 'Ceiling Fan Installation', qty: 1, rate: 250 },
+        { desc: 'Switchboard Wiring & Repair', qty: 2, rate: 180 },
+        { desc: 'MCB / Spare Parts Cost', qty: 1, rate: 450 },
+        { desc: 'Service Visit Charge', qty: 1, rate: 150 }
+      ],
+      '🔧 Plumber Service': [
+        { desc: 'Tap / Mixer Replacement', qty: 1, rate: 250 },
+        { desc: 'Pipe Leakage Fixing', qty: 1, rate: 350 },
+        { desc: 'PVC Pipes & Fittings Material', qty: 1, rate: 400 },
+        { desc: 'Motor / Tank Line Check', qty: 1, rate: 300 }
+      ]
+    };
+
+    // Update quick-add preset buttons when Service Category changes
+    function onCategoryChange() {
+      const category = document.getElementById('serviceType').value;
+      const presetBar = document.getElementById('presetBar');
+      presetBar.innerHTML = '';
+
+      (presets[category] || []).forEach(item => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'preset-chip';
+        btn.innerText = '+ ' + item.desc;
+        btn.onclick = () => addItemRow(item.desc, item.qty, item.rate);
+        presetBar.appendChild(btn);
+      });
+
+      calculateBill();
+    }
+
+    // Add a new item row dynamically
+    function addItemRow(desc = '', qty = 1, rate = '') {
+      const container = document.getElementById('itemsContainer');
+      const row = document.createElement('div');
+      row.className = 'item-row';
+
+      row.innerHTML = `
+        <input type="text" class="item-desc" placeholder="Item or work name" value="${desc}" oninput="calculateBill()" />
+        <input type="number" class="item-qty" min="1" value="${qty}" oninput="calculateBill()" />
+        <input type="number" class="item-rate" min="0" placeholder="0" value="${rate}" oninput="calculateBill()" />
+        <button type="button" class="btn-remove" title="Remove row" onclick="removeRow(this)">✕</button>
+      `;
+
+      container.appendChild(row);
+      calculateBill();
+    }
+
+    // Remove an item row
+    function removeRow(btn) {
+      const container = document.getElementById('itemsContainer');
+      if (container.children.length > 1) {
+        btn.parentElement.remove();
+      } else {
+        // Clear fields if it's the last remaining row
+        const row = btn.parentElement;
+        row.querySelector('.item-desc').value = '';
+        row.querySelector('.item-qty').value = 1;
+        row.querySelector('.item-rate').value = '';
+      }
+      calculateBill();
+    }
+
+    // Calculate Qty * Rate, Subtotal, Discount, GST, and Grand Total
+    function calculateBill() {
+      const service = document.getElementById('serviceType').value;
+      const invNo = document.getElementById('invoiceNo').value.trim() || 'INV-101';
+      const customer = document.getElementById('customerName').value.trim() || 'Walk-in Customer';
+      const phone = document.getElementById('customerPhone').value.trim() || 'N/A';
+
+      document.getElementById('outService').innerText = service;
+      document.getElementById('outInvNo').innerText = invNo;
+      document.getElementById('outCustomer').innerText = customer;
+      document.getElementById('outPhone').innerText = phone;
+
+      const rows = document.querySelectorAll('.item-row');
+      const tbody = document.getElementById('outItemsBody');
+      tbody.innerHTML = '';
+
+      let subtotal = 0;
+
+      rows.forEach(row => {
+        const desc = row.querySelector('.item-desc').value.trim() || 'Service Item';
+        const qty = parseFloat(row.querySelector('.item-qty').value) || 0;
+        const rate = parseFloat(row.querySelector('.item-rate').value) || 0;
+        const amount = qty * rate;
+        subtotal += amount;
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${desc}</td>
+          <td class="num">${qty}</td>
+          <td class="num">₹${rate.toFixed(2)}</td>
+          <td class="num"><strong>₹${amount.toFixed(2)}</strong></td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      const discount = parseFloat(document.getElementById('discount').value) || 0;
+      const gstPercent = parseFloat(document.getElementById('gstRate').value) || 0;
+
+      const taxableAmount = Math.max(0, subtotal - discount);
+      const gstAmount = (taxableAmount * gstPercent) / 100;
+      const grandTotal = taxableAmount + gstAmount;
+
+      document.getElementById('outSubtotal').innerText = '₹' + subtotal.toFixed(2);
+      document.getElementById('outDiscount').innerText = '- ₹' + discount.toFixed(2);
+      document.getElementById('outGstPercent').innerText = gstPercent;
+      document.getElementById('outGstAmount').innerText = '₹' + gstAmount.toFixed(2);
+      document.getElementById('outGrandTotal').innerText = '₹' + grandTotal.toFixed(2);
+    }
+
+    // Load initial preset buttons and 2 starter rows
+    onCategoryChange();
+    addItemRow('Base Trip Package (Chennai Local)', 1, 1500);
+    addItemRow('Toll & Parking Charges', 1, 180);
+  </script>
+</body>
+</html>
