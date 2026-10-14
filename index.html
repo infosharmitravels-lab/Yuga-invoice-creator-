@@ -1,12 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-  <title>Yuga Invoice Creator — Travels, Electrician & Plumber</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fixr — Travels, Electrician & Plumber Invoice Creator</title>
 
-  <!-- PART 1: CSS (Mobile-Friendly Alignment + Print/PDF Styling) -->
+  <!-- PART 1: CSS (Mobile-Friendly + Clean Print/PDF Styling) -->
   <style>
     :root {
       --primary: #1e40af;
@@ -61,7 +60,7 @@
 
     .header-banner h1 {
       margin: 0;
-      font-size: 1.25rem;
+      font-size: 1.3rem;
       line-height: 1.3;
     }
 
@@ -136,7 +135,12 @@
       width: 100%;
     }
 
-    @media (max-width: 500px) {
+    /* Make input fields full-width and easy to tap/edit on phone screens */
+    @media (max-width: 540px) {
+      .grid-2-mobile-full {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
       .grid-3 {
         grid-template-columns: 1fr 1fr;
       }
@@ -144,7 +148,7 @@
 
     label {
       display: block;
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       font-weight: 600;
       margin-bottom: 4px;
       color: var(--text);
@@ -153,12 +157,30 @@
     select, input {
       width: 100%;
       max-width: 100%;
-      padding: 9px 10px;
+      padding: 10px 12px;
       margin-bottom: 10px;
       border: 1px solid var(--border);
       border-radius: 8px;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       background: #ffffff;
+      color: var(--text);
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    select {
+      background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%),
+                        linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+      background-position: calc(100% - 16px) calc(1em + 2px),
+                           calc(100% - 11px) calc(1em + 2px);
+      background-size: 5px 5px, 5px 5px;
+      background-repeat: no-repeat;
+      padding-right: 28px;
+    }
+
+    input:focus, select:focus {
+      outline: 2px solid var(--primary);
+      border-color: var(--primary);
     }
 
     /* Travels Extra Fields Box */
@@ -201,7 +223,7 @@
       background: var(--primary-light);
     }
 
-    /* Dynamic Item Rows (Mobile responsive grid) */
+    /* Dynamic Item Rows */
     .items-header {
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 0.7fr) minmax(0, 1fr) 32px;
@@ -232,7 +254,7 @@
       color: var(--danger);
       border: 1px solid #fecaca;
       border-radius: 8px;
-      height: 35px;
+      height: 36px;
       width: 32px;
       font-weight: 700;
       cursor: pointer;
@@ -315,14 +337,14 @@
     }
 
     .shop-title {
-      font-size: 1.12rem;
+      font-size: 1.2rem;
       font-weight: 800;
       color: var(--primary);
       margin: 0 0 4px 0;
     }
 
     .shop-sub {
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       color: var(--muted);
       margin: 2px 0;
     }
@@ -455,42 +477,42 @@
 <body>
 
   <div class="page-wrap">
-    <!-- Top App Banner (Hidden when printing) -->
+    <!-- Top App Banner (Changed to Fixr) -->
     <div class="header-banner no-print">
       <div>
-        <h1>Yuga Invoice Creator — QuickBill Pro</h1>
+        <h1>Fixr — QuickBill Pro</h1>
         <p>Travels, Electrician & Plumber Billing (PDF Print & WhatsApp Ready)</p>
       </div>
-      <span class="badge-complete">Complete Version</span>
+      <span class="badge-complete">Fixr Official</span>
     </div>
 
     <div class="container">
-      <!-- LEFT COLUMN: Input Controls (Hidden when printing PDF) -->
+      <!-- LEFT COLUMN: Input Controls -->
       <div class="no-print">
-        <!-- 1. Business Profile Card -->
+        <!-- 1. Business Profile Card (Fully Editable & Defaults to Fixr) -->
         <div class="card">
           <h2>
             <span>1. Your Business / Shop Details</span>
-            <span class="section-tag">Auto-saved</span>
+            <button type="button" class="preset-chip" onclick="resetBizProfile()">Reset</button>
           </h2>
-          <div class="grid-2">
+          <div class="grid-2 grid-2-mobile-full">
             <div>
-              <label for="bizName">Business Name</label>
-              <input type="text" id="bizName" placeholder="e.g., Yuga Travels & Services" oninput="saveBizProfile(); calculateBill();" />
+              <label for="bizName">Business Name (Editable)</label>
+              <input type="text" id="bizName" value="Fixr" placeholder="Enter business name (e.g., Fixr)" oninput="onBizInput()" onkeyup="onBizInput()" onchange="onBizInput()" />
             </div>
             <div>
-              <label for="bizPhone">Business Phone</label>
-              <input type="tel" id="bizPhone" placeholder="e.g., 98400 12345" oninput="saveBizProfile(); calculateBill();" />
+              <label for="bizPhone">Business Phone Number</label>
+              <input type="tel" id="bizPhone" value="" placeholder="Type your phone number here" oninput="onBizInput()" onkeyup="onBizInput()" onchange="onBizInput()" />
             </div>
           </div>
-          <div class="grid-2">
+          <div class="grid-2 grid-2-mobile-full">
             <div>
               <label for="bizAddress">City / Address</label>
-              <input type="text" id="bizAddress" placeholder="e.g., Chennai, Tamil Nadu" oninput="saveBizProfile(); calculateBill();" />
+              <input type="text" id="bizAddress" value="" placeholder="Type city or address (e.g., Chennai)" oninput="onBizInput()" onkeyup="onBizInput()" onchange="onBizInput()" />
             </div>
             <div>
-              <label for="bizUpi">UPI ID / GPay No.</label>
-              <input type="text" id="bizUpi" placeholder="e.g., 9840012345@upi" oninput="saveBizProfile(); calculateBill();" />
+              <label for="bizUpi">UPI ID / GPay Number</label>
+              <input type="text" id="bizUpi" value="" placeholder="Type your UPI ID or GPay number" oninput="onBizInput()" onkeyup="onBizInput()" onchange="onBizInput()" />
             </div>
           </div>
         </div>
@@ -526,7 +548,7 @@
             </div>
           </div>
 
-          <div class="grid-2">
+          <div class="grid-2 grid-2-mobile-full">
             <div>
               <label for="customerName">Customer Name</label>
               <input type="text" id="customerName" placeholder="e.g., Ramesh Kumar" oninput="calculateBill()" />
@@ -540,7 +562,7 @@
           <!-- Special Trip Details Box (Only visible for Travels) -->
           <div class="travels-box" id="travelsExtraBox">
             <div class="travels-box-title">🚗 Travels Trip Meter & Route (Optional)</div>
-            <div class="grid-2">
+            <div class="grid-2 grid-2-mobile-full">
               <div>
                 <label for="vehicleInfo">Vehicle No. & Model</label>
                 <input type="text" id="vehicleInfo" placeholder="e.g., TN-01-AB-1234 (Innova)" oninput="calculateBill()" />
@@ -626,9 +648,9 @@
           <div class="invoice-box" id="printableInvoice">
             <div class="shop-header">
               <div>
-                <h3 class="shop-title" id="outBizName">Yuga Travels & Services</h3>
-                <p class="shop-sub" id="outBizAddress">Chennai, Tamil Nadu</p>
-                <p class="shop-sub"><strong>Phone:</strong> <span id="outBizPhone">--</span></p>
+                <h3 class="shop-title" id="outBizName">Fixr</h3>
+                <p class="shop-sub" id="outBizAddress"></p>
+                <p class="shop-sub" id="outBizPhoneLine" style="display: none;"><strong>Phone:</strong> <span id="outBizPhone"></span></p>
               </div>
               <div style="text-align: right;">
                 <span class="service-badge" id="outService">🚗 Travels & Cab Service</span>
@@ -644,7 +666,7 @@
               </div>
               <div style="text-align: right;">
                 <strong>Payment:</strong> <span id="outPayMode">UPI / GPay</span><br />
-                <span id="outUpiLine"><strong>UPI ID:</strong> <span id="outBizUpi">--</span></span>
+                <span id="outUpiLine" style="display: none;"><strong>UPI ID:</strong> <span id="outBizUpi"></span></span>
               </div>
             </div>
 
@@ -684,7 +706,7 @@
             </div>
 
             <div class="invoice-footer">
-              <span>Thank you for your business!</span>
+              <span>Thank you for choosing Fixr!</span>
               <span>Authorized Signatory</span>
             </div>
           </div>
@@ -739,18 +761,46 @@
       ]
     };
 
+    // Safely load Business Profile (Using new 'fixr_' keys so old Yuga/sample values don't lock the boxes)
     function loadBizProfile() {
-      document.getElementById('bizName').value = localStorage.getItem('qb_bizName') || 'Yuga Travels & Services';
-      document.getElementById('bizPhone').value = localStorage.getItem('qb_bizPhone') || '98400 12345';
-      document.getElementById('bizAddress').value = localStorage.getItem('qb_bizAddress') || 'Chennai, Tamil Nadu';
-      document.getElementById('bizUpi').value = localStorage.getItem('qb_bizUpi') || '9840012345@upi';
+      try {
+        // Clear old keys from previous versions
+        localStorage.removeItem('qb_bizName');
+        localStorage.removeItem('qb_bizPhone');
+        localStorage.removeItem('qb_bizAddress');
+        localStorage.removeItem('qb_bizUpi');
+
+        const savedName = localStorage.getItem('fixr_bizName');
+        const savedPhone = localStorage.getItem('fixr_bizPhone');
+        const savedAddress = localStorage.getItem('fixr_bizAddress');
+        const savedUpi = localStorage.getItem('fixr_bizUpi');
+
+        document.getElementById('bizName').value = savedName !== null ? savedName : 'Fixr';
+        document.getElementById('bizPhone').value = savedPhone !== null ? savedPhone : '';
+        document.getElementById('bizAddress').value = savedAddress !== null ? savedAddress : '';
+        document.getElementById('bizUpi').value = savedUpi !== null ? savedUpi : '';
+      } catch (e) {
+        document.getElementById('bizName').value = 'Fixr';
+      }
     }
 
-    function saveBizProfile() {
-      localStorage.setItem('qb_bizName', document.getElementById('bizName').value);
-      localStorage.setItem('qb_bizPhone', document.getElementById('bizPhone').value);
-      localStorage.setItem('qb_bizAddress', document.getElementById('bizAddress').value);
-      localStorage.setItem('qb_bizUpi', document.getElementById('bizUpi').value);
+    // Update bill immediately AND save safely when typing in Box 1
+    function onBizInput() {
+      calculateBill();
+      try {
+        localStorage.setItem('fixr_bizName', document.getElementById('bizName').value);
+        localStorage.setItem('fixr_bizPhone', document.getElementById('bizPhone').value);
+        localStorage.setItem('fixr_bizAddress', document.getElementById('bizAddress').value);
+        localStorage.setItem('fixr_bizUpi', document.getElementById('bizUpi').value);
+      } catch (e) {}
+    }
+
+    function resetBizProfile() {
+      document.getElementById('bizName').value = 'Fixr';
+      document.getElementById('bizPhone').value = '';
+      document.getElementById('bizAddress').value = '';
+      document.getElementById('bizUpi').value = '';
+      onBizInput();
     }
 
     function onCategoryChange() {
@@ -816,15 +866,19 @@
     }
 
     function calculateBill() {
-      const bizName = document.getElementById('bizName').value.trim() || 'Yuga Travels & Services';
-      const bizPhone = document.getElementById('bizPhone').value.trim() || '--';
-      const bizAddress = document.getElementById('bizAddress').value.trim() || '';
+      const bizName = document.getElementById('bizName').value.trim() || 'Fixr';
+      const bizPhone = document.getElementById('bizPhone').value.trim();
+      const bizAddress = document.getElementById('bizAddress').value.trim();
       const bizUpi = document.getElementById('bizUpi').value.trim();
 
       document.getElementById('outBizName').innerText = bizName;
-      document.getElementById('outBizPhone').innerText = bizPhone;
       document.getElementById('outBizAddress').innerText = bizAddress;
-      document.getElementById('outBizUpi').innerText = bizUpi || 'N/A';
+      document.getElementById('outBizAddress').style.display = bizAddress ? 'block' : 'none';
+
+      document.getElementById('outBizPhone').innerText = bizPhone;
+      document.getElementById('outBizPhoneLine').style.display = bizPhone ? 'block' : 'none';
+
+      document.getElementById('outBizUpi').innerText = bizUpi;
       document.getElementById('outUpiLine').style.display = bizUpi ? 'inline' : 'none';
 
       const service = document.getElementById('serviceType').value;
@@ -920,7 +974,7 @@
       msg += `*Grand Total: ₹${data.grandTotal.toFixed(2)}*\n`;
       msg += `Payment: ${data.payMode}\n`;
       if (data.bizUpi) msg += `UPI ID: ${data.bizUpi}\n`;
-      msg += `\nThank you for your business!`;
+      msg += `\nThank you for choosing ${data.bizName}!`;
 
       const cleanPhone = data.phone.replace(/\D/g, '');
       const waPhone = cleanPhone.length === 10 ? '91' + cleanPhone : cleanPhone;
@@ -933,36 +987,42 @@
 
     function saveCurrentBill() {
       const data = calculateBill();
-      const history = JSON.parse(localStorage.getItem('qb_history') || '[]');
-      history.unshift({
-        invNo: data.invNo,
-        date: todayStr,
-        customer: data.customer,
-        service: data.service,
-        total: data.grandTotal.toFixed(2)
-      });
-      localStorage.setItem('qb_history', JSON.stringify(history.slice(0, 10)));
-      renderHistory();
+      try {
+        const history = JSON.parse(localStorage.getItem('qb_history') || '[]');
+        history.unshift({
+          invNo: data.invNo,
+          date: todayStr,
+          customer: data.customer,
+          service: data.service,
+          total: data.grandTotal.toFixed(2)
+        });
+        localStorage.setItem('qb_history', JSON.stringify(history.slice(0, 10)));
+        renderHistory();
+      } catch (e) {}
     }
 
     function renderHistory() {
-      const history = JSON.parse(localStorage.getItem('qb_history') || '[]');
-      const container = document.getElementById('historyList');
-      if (history.length === 0) {
-        container.innerHTML = 'No saved bills yet. Click "Save Bill" below the invoice.';
-        return;
-      }
-      container.innerHTML = history.map(item => `
-        <div class="history-item">
-          <span><strong>${item.invNo}</strong> — ${item.customer} (${item.service})</span>
-          <strong style="color: var(--accent);">₹${item.total}</strong>
-        </div>
-      `).join('');
+      try {
+        const history = JSON.parse(localStorage.getItem('qb_history') || '[]');
+        const container = document.getElementById('historyList');
+        if (history.length === 0) {
+          container.innerHTML = 'No saved bills yet. Click "Save Bill" below the invoice.';
+          return;
+        }
+        container.innerHTML = history.map(item => `
+          <div class="history-item">
+            <span><strong>${item.invNo}</strong> — ${item.customer} (${item.service})</span>
+            <strong style="color: var(--accent);">₹${item.total}</strong>
+          </div>
+        `).join('');
+      } catch (e) {}
     }
 
     function clearHistory() {
-      localStorage.removeItem('qb_history');
-      renderHistory();
+      try {
+        localStorage.removeItem('qb_history');
+        renderHistory();
+      } catch (e) {}
     }
 
     function startNewBill() {
