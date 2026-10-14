@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Invoice Creator — Travels, Electrician & Plumber Bill Maker</title>
+
+  <!-- PART 1: CSS (Screen Layout + Fixr Website Ad Banner + Category Model Invoice Print) -->
+  <style>
+    :root {
+      --primary: #1e40af;
+      --primary-dark: #1e3a8a;
+      --primary-light: #dbeafe;
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --border: #cbd5e1;
+      --accent: #047857;
+      --whatsapp: #16a34a;
+      --danger: #dc2626;
+    }
+
+    * {
+      box-sizing: border-box;
+      min-width: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      overflow-x: hidden;
+      background-color: var(--bg);
+      color: var(--text);
+    }
+
+    .page-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 12px 40px 12px;
+      width: 100%;
+    }
+
+    /* FIXR WEBSITE AD BANNER (Shown ONLY on Website, NEVER on Printed Bill) */
+    .fixr-ad-banner {
+      width: 100%;
+      margin: 0 0 16px 0;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 60%, #1d4ed8 100%);
+      color: #ffffff;
+      padding: 16px 20px;
+      border-radius: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .fixr-ad-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .fixr-logo-badge {
+      background: #f59e0b;
+      color: #0f172a;
+      font-weight: 900;
+      font-size: 1.25rem;
+      padding: 10px 14px;
+      border-radius: 10px;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
+    }
+
+    .fixr-ad-text h1 {
+      margin: 0;
+      font-size: 1.15rem;
+      color: #ffffff;
+    }
+
+    .fixr-ad-text p {
+      margin: 4px 0 0 0;
+      font-size: 0.82rem;
+      color: #e2e8f0;
+    }
+
+    .fixr-ad-tag {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.15);
+      color: #fde68a;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 4px;
+    }
+
+    .fixr-ad-btn {
+      background: #f59e0b;
+      color: #0f172a;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 10px 16px;
+      border-radius: 999px;
+      white-space: nowrap;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .container {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    @media (max-width: 860px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      width: 100%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+      margin-bottom: 16px;
+    }
+
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.02rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+      color: var(--primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .section-tag {
+      font-size: 0.74rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      width: 100%;
+    }
+
+    @media (max-width: 540px) {
+      .grid-2-mobile-full {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+      .grid-3 {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+
+    select, input {
+      width: 100%;
+      max-width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.94rem;
+      background: #ffffff;
+      color: var(--text);
+    }
+
+    input:focus, select:focus {
+      outline: 2px solid var(--primary);
+      border-color: var(--primary);
+    }
+
+    .travels-box {
+      background: #f8fafc;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+      width: 100%;
+    }
+
+    .travels-box-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .preset-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .preset-chip {
+      background: #eff6ff;
+      color: var(--primary);
+      border: 1px solid #bfdbfe;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .items-header {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 0.7fr) minmax(0, 1fr) 32px;
+      gap: 6px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 6px;
+      width: 100%;
+    }
+
+    .item-row {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 0.7fr) minmax(0, 1fr) 32px;
+      gap: 6px;
+      align-items: center;
+      margin-bottom: 8px;
+      width: 100%;
+    }
+
+    .item-row input {
+      margin-bottom: 0;
+      padding: 8px;
+    }
+
+    .btn-remove {
+      background: #fee2e2;
+      color: var(--danger);
+      border: 1px solid #fecaca;
+      border-radius: 8px;
+      height: 36px;
+      width: 32px;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .btn-add {
+      background: #eff6ff;
+      color: var(--primary);
+      border: 1px dashed var(--primary);
+      margin-top: 2px;
+      margin-bottom: 14px;
+      padding: 10px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .action-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .btn-action {
+      padding: 11px 10px;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      text-align: center;
+    }
+
+    .btn-print { background: var(--primary); }
+    .btn-whatsapp { background: var(--whatsapp); }
+    .btn-save { background: #334155; }
+    .btn-new { background: #f1f5f9; color: var(--text); border: 1px solid var(--border); }
+
+    /* =====================================================
+       MODEL CUSTOMER INVOICE (With Category Visual Banner)
+       ===================================================== */
+    .invoice-box {
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #ffffff;
+      width: 100%;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+    }
+
+    /* Category Model Banner inside Invoice */
+    .invoice-hero {
+      padding: 18px 20px;
+      color: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      background: linear-gradient(135deg, #1e40af, #1d4ed8);
+    }
+
+    .invoice-hero.theme-travels {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+    }
+
+    .invoice-hero.theme-electrician {
+      background: linear-gradient(135deg, #78350f 0%, #d97706 100%);
+    }
+
+    .invoice-hero.theme-plumber {
+      background: linear-gradient(135deg, #0f766e 0%, #0284c7 100%);
+    }
+
+    .hero-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .category-art-box {
+      width: 68px;
+      height: 68px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      padding: 6px;
+    }
+
+    .category-art-box svg {
+      width: 56px;
+      height: 56px;
+    }
+
+    .shop-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin: 0 0 3px 0;
+      letter-spacing: 0.2px;
+    }
+
+    .shop-cat-pill {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.22);
+      color: #ffffff;
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 999px;
+      margin-bottom: 4px;
+    }
+
+    .shop-sub {
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin: 2px 0;
+    }
+
+    .invoice-body {
+      padding: 18px;
+    }
+
+    .meta-grid {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 10px 12px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .trip-summary-banner {
+      font-size: 0.78rem;
+      background: #eff6ff;
+      border-left: 4px solid #2563eb;
+      color: #1e3a8a;
+      padding: 8px 10px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+      display: none;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8px 0 12px 0;
+      font-size: 0.83rem;
+    }
+
+    th {
+      background: #f1f5f9;
+      text-align: left;
+      padding: 8px 6px;
+      border-bottom: 2px solid var(--border);
+      color: #334155;
+      font-weight: 700;
+    }
+
+    td {
+      padding: 8px 6px;
+      border-bottom: 1px solid #e2e8f0;
+      word-break: break-word;
+    }
+
+    .num {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 4px 0;
+      font-size: 0.86rem;
+      color: var(--muted);
+    }
+
+    .total-box {
+      margin-top: 10px;
+      padding: 12px 14px;
+      background: #ecfdf5;
+      border: 1px solid #6ee7b7;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .invoice-footer {
+      margin-top: 16px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      font-size: 0.76rem;
+      color: var(--muted);
+    }
+
+    .sign-box {
+      text-align: right;
+    }
+
+    .sign-line {
+      width: 110px;
+      border-top: 1px solid #94a3b8;
+      margin-top: 22px;
+      padding-top: 4px;
+    }
+
+    /* Footer Fixr Ad on Website only */
+    .fixr-footer-ad {
+      margin-top: 12px;
+      background: #eff6ff;
+      border: 1px dashed #93c5fd;
+      border-radius: 10px;
+      padding: 12px 16px;
+      text-align: center;
+      font-size: 0.82rem;
+      color: #1e3a8a;
+    }
+
+    .history-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 6px;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 0.82rem;
+      gap: 8px;
+    }
+
+    /* PRINT / PDF MODE: Hide ALL Fixr Ads & Forms, Print ONLY Customer Bill with Category Image */
+    @media print {
+      body, .page-wrap {
+        background: #ffffff !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .container {
+        display: block !important;
+        width: 100% !important;
+      }
+      .card {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .invoice-box {
+        border: 1px solid #94a3b8 !important;
+        box-shadow: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-wrap">
+    <!-- FIXR WEBSITE AD BANNER (Visible on Website ONLY - Hidden on Print/PDF) -->
+    <div class="fixr-ad-banner no-print">
+      <div class="fixr-ad-left">
+        <div class="fixr-logo-badge">FIXR</div>
+        <div class="fixr-ad-text">
+          <span class="fixr-ad-tag">Sponsored by FixrService.in</span>
+          <h1>Free Instant Bill & Invoice Maker</h1>
+          <p>Create professional customer bills for Travels, Electrician & Plumber works — Free tool by Fixr</p>
+        </div>
+      </div>
+      <a href="https://fixrservice.in" target="_blank" class="fixr-ad-btn">Visit FixrService.in →</a>
+    </div>
+
+    <div class="container">
+      <!-- LEFT COLUMN: Input Controls (Hidden when printing PDF) -->
+      <div class="no-print">
+        <!-- 1. Business Profile Card (For the Travels/Electrician/Plumber Shop Owner) -->
+        <div class="card">
+          <h2>
+            <span>1. Your Shop / Business Details</span>
+            <button type="button" class="preset-chip" onclick="resetBizProfile()">Clear</button>
+          </h2>
+          <div class="grid-2 grid-2-mobile-full">
+            <div>
+              <label for="bizName">Your Business / Shop Name</label>
+              <input type="text" id="bizName" value="" placeholder="e.g., Sri Balaji Travels / Kumar Electricals" oninput="onBizInput()" onkeyup="onBizInput()" onchange="onBizInput()" />
+            </div>
+            <div>
+              <label for="bizPhone">Your Shop Phone Number</label>
+              <input type="tel" id="bizPhone" value="" placeholder="e.g., 98765 43210" oninput="onBizInput()" onkeyup="onBizInput()" onchange="onBizInput()" />
+            </div>
+          </div>
+          <div class="grid-2 grid-2-mobile-full">
+            <div>
+              <label for="bizAddress">Shop City / Address</label>
+              <input type="text" id="bizAddress" value="" placeholder="e.g., Anna Nagar, Chennai" oninput="onBizInput()" onkeyup="onBizInput()" onchange="onBizInput()" />
+            </div>
+            <div>
+              <label for="bizUpi">Your UPI ID / GPay Number</label>
+              <input type="text" id="bizUpi" value="" placeholder="e.g., 9876543210@upi" oninput="onBizInput()" onkeyup="onBizInput()" onchange="onBizInput()" />
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Customer & Service Details Card -->
+        <div class="card">
+          <h2>
+            <span>2. Select Category & Enter Bill Items</span>
+            <span class="section-tag">Changes Bill Model Image</span>
+          </h2>
+
+          <div class="grid-3">
+            <div>
+              <label for="serviceType">Service Category</label>
+              <select id="serviceType" onchange="onCategoryChange()">
+                <option value="travels">🚗 Travels & Cab</option>
+                <option value="electrician">⚡ Electrician</option>
+                <option value="plumber">🔧 Plumber</option>
+              </select>
+            </div>
+            <div>
+              <label for="invoiceNo">Invoice No.</label>
+              <input type="text" id="invoiceNo" value="INV-101" oninput="calculateBill()" />
+            </div>
+            <div>
+              <label for="payMode">Payment Mode</label>
+              <select id="payMode" onchange="calculateBill()">
+                <option value="UPI / GPay">UPI / GPay</option>
+                <option value="Cash">Cash</option>
+                <option value="Bank Transfer">Bank Transfer</option>
+                <option value="Pending (Unpaid)">Pending</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid-2 grid-2-mobile-full">
+            <div>
+              <label for="customerName">Customer Name</label>
+              <input type="text" id="customerName" placeholder="e.g., Ramesh Kumar" oninput="calculateBill()" />
+            </div>
+            <div>
+              <label for="customerPhone">Customer WhatsApp / Phone</label>
+              <input type="tel" id="customerPhone" placeholder="e.g., 9876543210" oninput="calculateBill()" />
+            </div>
+          </div>
+
+          <!-- Special Trip Details Box (Only visible for Travels) -->
+          <div class="travels-box" id="travelsExtraBox">
+            <div class="travels-box-title">🚗 Travels Trip Meter & Route (Optional)</div>
+            <div class="grid-2 grid-2-mobile-full">
+              <div>
+                <label for="vehicleInfo">Vehicle No. & Model</label>
+                <input type="text" id="vehicleInfo" placeholder="e.g., TN-01-AB-1234 (Innova)" oninput="calculateBill()" />
+              </div>
+              <div>
+                <label for="tripRoute">Pickup → Drop Route</label>
+                <input type="text" id="tripRoute" placeholder="e.g., Chennai to Pondicherry" oninput="calculateBill()" />
+              </div>
+            </div>
+            <div class="grid-3">
+              <div>
+                <label for="startKm">Start KM</label>
+                <input type="number" id="startKm" placeholder="12500" oninput="calculateBill()" />
+              </div>
+              <div>
+                <label for="endKm">Closing KM</label>
+                <input type="number" id="endKm" placeholder="12780" oninput="calculateBill()" />
+              </div>
+              <div>
+                <label for="ratePerKm">Rate/KM (₹)</label>
+                <input type="number" id="ratePerKm" value="14" oninput="calculateBill()" />
+              </div>
+            </div>
+            <button type="button" class="preset-chip" onclick="addKmRowToBill()">+ Add Calculated KM Trip to Bill</button>
+          </div>
+
+          <!-- Quick-Add Preset Buttons -->
+          <label>Quick-Add Common Items (Click to add):</label>
+          <div class="preset-bar" id="presetBar"></div>
+
+          <!-- Dynamic Item Rows -->
+          <div class="items-header">
+            <span>Item / Work Description</span>
+            <span>Qty/KM</span>
+            <span>Rate (₹)</span>
+            <span></span>
+          </div>
+          <div id="itemsContainer"></div>
+
+          <button type="button" class="btn-add" onclick="addItemRow('', 1, '')">
+            + Add Another Item Row
+          </button>
+
+          <!-- Discount & GST -->
+          <div class="grid-2">
+            <div>
+              <label for="discount">Discount (₹)</label>
+              <input type="number" id="discount" value="0" min="0" oninput="calculateBill()" />
+            </div>
+            <div>
+              <label for="gstRate">GST (%)</label>
+              <select id="gstRate" onchange="calculateBill()">
+                <option value="0">0% (No GST)</option>
+                <option value="5">5% GST</option>
+                <option value="12">12% GST</option>
+                <option value="18">18% GST</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Saved Bills History Card -->
+        <div class="card">
+          <h2>
+            <span>3. Recent Saved Bills</span>
+            <button type="button" class="preset-chip" onclick="clearHistory()">Clear</button>
+          </h2>
+          <div id="historyList" style="font-size: 0.82rem; color: var(--muted);">
+            No saved bills yet. Click "Save Bill" below the invoice.
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: Model Customer Invoice (NO Fixr branding inside bill!) -->
+      <div>
+        <div class="card">
+          <h2 class="no-print">
+            <span>Customer Bill Preview (Model Invoice)</span>
+            <span class="section-tag">No Ads on Printed Bill</span>
+          </h2>
+
+          <!-- PRINTABLE CUSTOMER INVOICE -->
+          <div class="invoice-box" id="printableInvoice">
+            <!-- Category Model Header with Custom Category Graphic Image -->
+            <div class="invoice-hero theme-travels" id="invoiceHero">
+              <div class="hero-left">
+                <!-- Category Vector Illustration Image -->
+                <div class="category-art-box" id="categoryArtBox"></div>
+                <div>
+                  <span class="shop-cat-pill" id="outServiceBadge">🚗 TRAVELS & CAB SERVICE</span>
+                  <h3 class="shop-title" id="outBizName">Travels & Cab Invoice</h3>
+                  <p class="shop-sub" id="outBizAddress"></p>
+                  <p class="shop-sub" id="outBizPhoneLine" style="display: none;">Phone: <strong id="outBizPhone"></strong></p>
+                </div>
+              </div>
+              <div style="text-align: right;">
+                <p class="shop-sub" style="font-size: 0.85rem;"><strong>INVOICE</strong></p>
+                <p class="shop-sub"><strong>No:</strong> <span id="outInvNo">INV-101</span></p>
+                <p class="shop-sub"><strong>Date:</strong> <span id="outDate">--</span></p>
+              </div>
+            </div>
+
+            <div class="invoice-body">
+              <div class="meta-grid">
+                <div>
+                  <strong>Billed To Customer:</strong><br />
+                  <span id="outCustomer" style="font-size: 0.92rem; font-weight: 700;">Walk-in Customer</span><br />
+                  <span>Phone: <strong id="outPhone">N/A</strong></span>
+                </div>
+                <div style="text-align: right;">
+                  <strong>Payment Mode:</strong> <span id="outPayMode">UPI / GPay</span><br />
+                  <span id="outUpiLine" style="display: none;"><strong>UPI / GPay:</strong> <span id="outBizUpi"></span></span>
+                </div>
+              </div>
+
+              <!-- Travels Route & KM Banner -->
+              <div class="trip-summary-banner" id="outTripBanner"></div>
+
+              <!-- Itemized Table -->
+              <table>
+                <thead>
+                  <tr>
+                    <th>Work / Item Description</th>
+                    <th class="num">Qty/KM</th>
+                    <th class="num">Rate</th>
+                    <th class="num">Amount</th>
+                  </tr>
+                </thead>
+                <tbody id="outItemsBody"></tbody>
+              </table>
+
+              <!-- Totals Breakdown -->
+              <div class="summary-row">
+                <span>Subtotal:</span>
+                <strong id="outSubtotal">₹0.00</strong>
+              </div>
+              <div class="summary-row">
+                <span>Discount:</span>
+                <strong id="outDiscount">- ₹0.00</strong>
+              </div>
+              <div class="summary-row">
+                <span>GST (<span id="outGstPercent">0</span>%):</span>
+                <strong id="outGstAmount">₹0.00</strong>
+              </div>
+
+              <div class="total-box">
+                <span>Total Payable</span>
+                <span id="outGrandTotal">₹0.00</span>
+              </div>
+
+              <!-- Clean Customer Bill Footer (No Fixr ad here!) -->
+              <div class="invoice-footer">
+                <div>
+                  <strong>Thank you for your business!</strong><br />
+                  <span>Customer Receipt & Service Bill</span>
+                </div>
+                <div class="sign-box">
+                  <div class="sign-line">Authorized Signature</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons (Hidden when printing) -->
+          <div class="action-grid no-print">
+            <button type="button" class="btn-action btn-print" onclick="window.print()">
+              🖨️ Print / Save PDF
+            </button>
+            <button type="button" class="btn-action btn-whatsapp" onclick="shareOnWhatsApp()">
+              💬 Send on WhatsApp
+            </button>
+            <button type="button" class="btn-action btn-save" onclick="saveCurrentBill()">
+              💾 Save Bill
+            </button>
+            <button type="button" class="btn-action btn-new" onclick="startNewBill()">
+              ➕ New Bill
+            </button>
+          </div>
+
+          <!-- Second Fixr Ad Box at bottom of Website (Hidden when printing) -->
+          <div class="fixr-footer-ad no-print">
+            🔧⚡🚗 <strong>Fixr (fixrservice.in)</strong> — Book Verified Electricians, Plumbers & Travels Services Online!
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 3: JAVASCRIPT -->
+  <script>
+    const todayStr = new Date().toLocaleDateString('en-IN', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    });
+    document.getElementById('outDate').innerText = todayStr;
+
+    // Category Config: Custom SVG Model Images, Themes, Default Titles & Item Presets
+    const categoryConfig = {
+      travels: {
+        badge: '🚗 TRAVELS & CAB SERVICE',
+        defaultTitle: 'Travels & Cab Invoice',
+        themeClass: 'theme-travels',
+        svg: `
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="32" cy="32" r="30" fill="#DBEAFE"/>
+            <path d="M14 38L18 24C19 21.5 21.2 20 24 20H40C42.8 20 45 21.5 46 24L50 38V46C50 47.1 49.1 48 48 48H45C43.9 48 43 47.1 43 46V44H21V46C21 47.1 20.1 48 19 48H16C14.9 48 14 47.1 14 46V38Z" fill="#1D4ED8"/>
+            <path d="M20 25H44L46.5 34H17.5L20 25Z" fill="#93C5FD"/>
+            <rect x="27" y="15" width="10" height="5" rx="2" fill="#F59E0B"/>
+            <circle cx="21" cy="39" r="3" fill="#FDE047"/>
+            <circle cx="43" cy="39" r="3" fill="#FDE047"/>
+          </svg>
+        `,
+        presets: [
+          { desc: 'Base Trip Package', qty: 1, rate: 1500 },
+          { desc: 'Extra KM Charge', qty: 20, rate: 14 },
+          { desc: 'Toll & Parking Charges', qty: 1, rate: 180 },
+          { desc: 'Driver Bata', qty: 1, rate: 300 }
+        ]
+      },
+      electrician: {
+        badge: '⚡ ELECTRICAL SERVICE',
+        defaultTitle: 'Electrical Service Invoice',
+        themeClass: 'theme-electrician',
+        svg: `
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="32" cy="32" r="30" fill="#FEF3C7"/>
+            <path d="M32 10C22.6 10 15 17.6 15 27C15 33.2 18.3 38.6 23.3 41.5L25 47H39L40.7 41.5C45.7 38.6 49 33.2 49 27C49 17.6 41.4 10 32 10Z" fill="#F59E0B"/>
+            <path d="M34 18L25 30H32L30 40L39 28H32L34 18Z" fill="#FFFFFF"/>
+            <rect x="26" y="49" width="12" height="5" rx="2" fill="#78350F"/>
+          </svg>
+        `,
+        presets: [
+          { desc: 'Ceiling Fan Installation', qty: 1, rate: 250 },
+          { desc: 'Switchboard Wiring & Repair', qty: 2, rate: 180 },
+          { desc: 'MCB / Spare Parts Cost', qty: 1, rate: 450 },
+          { desc: 'Electrical Visit Charge', qty: 1, rate: 150 }
+        ]
+      },
+      plumber: {
+        badge: '🔧 PLUMBING SERVICE',
+        defaultTitle: 'Plumbing Service Invoice',
+        themeClass: 'theme-plumber',
+        svg: `
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="32" cy="32" r="30" fill="#E0F2FE"/>
+            <path d="M18 28H38C42.4 28 46 31.6 46 36V40H38V36C38 34.9 37.1 34 36 34H18V28Z" fill="#0284C7"/>
+            <rect x="26" y="18" width="6" height="10" fill="#0369A1"/>
+            <rect x="20" y="14" width="18" height="5" rx="2.5" fill="#0F766E"/>
+            <path d="M42 44C42 44 37 50 37 53C37 55.8 39.2 58 42 58C44.8 58 47 55.8 47 53C47 50 42 44 42 44Z" fill="#38BDF8"/>
+          </svg>
+        `,
+        presets: [
+          { desc: 'Tap / Mixer Replacement', qty: 1, rate: 250 },
+          { desc: 'Pipe Leakage Fixing', qty: 1, rate: 350 },
+          { desc: 'PVC Pipes & Fittings Material', qty: 1, rate: 400 },
+          { desc: 'Motor / Tank Line Work', qty: 1, rate: 300 }
+        ]
+      }
+    };
+
+    function loadBizProfile() {
+      try {
+        // Clear older default keys so "Fixr" is never forced into the user's bill
+        localStorage.removeItem('qb_bizName');
+        localStorage.removeItem('fixr_bizName');
+
+        document.getElementById('bizName').value = localStorage.getItem('user_shop_name') || '';
+        document.getElementById('bizPhone').value = localStorage.getItem('user_shop_phone') || '';
+        document.getElementById('bizAddress').value = localStorage.getItem('user_shop_address') || '';
+        document.getElementById('bizUpi').value = localStorage.getItem('user_shop_upi') || '';
+      } catch (e) {}
+    }
+
+    function onBizInput() {
+      calculateBill();
+      try {
+        localStorage.setItem('user_shop_name', document.getElementById('bizName').value);
+        localStorage.setItem('user_shop_phone', document.getElementById('bizPhone').value);
+        localStorage.setItem('user_shop_address', document.getElementById('bizAddress').value);
+        localStorage.setItem('user_shop_upi', document.getElementById('bizUpi').value);
+      } catch (e) {}
+    }
+
+    function resetBizProfile() {
+      document.getElementById('bizName').value = '';
+      document.getElementById('bizPhone').value = '';
+      document.getElementById('bizAddress').value = '';
+      document.getElementById('bizUpi').value = '';
+      onBizInput();
+    }
+
+    function onCategoryChange() {
+      const catKey = document.getElementById('serviceType').value;
+      const cfg = categoryConfig[catKey] || categoryConfig.travels;
+
+      // Update Travels KM Box visibility
+      document.getElementById('travelsExtraBox').style.display = catKey === 'travels' ? 'block' : 'none';
+
+      // Update Invoice Model Header Theme & Category Illustration SVG
+      const hero = document.getElementById('invoiceHero');
+      hero.className = 'invoice-hero ' + cfg.themeClass;
+      document.getElementById('categoryArtBox').innerHTML = cfg.svg;
+      document.getElementById('outServiceBadge').innerText = cfg.badge;
+
+      // Update Preset Chips
+      const presetBar = document.getElementById('presetBar');
+      presetBar.innerHTML = '';
+      cfg.presets.forEach(item => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'preset-chip';
+        btn.innerText = '+ ' + item.desc;
+        btn.onclick = () => addItemRow(item.desc, item.qty, item.rate);
+        presetBar.appendChild(btn);
+      });
+
+      calculateBill();
+    }
+
+    function addKmRowToBill() {
+      const startKm = parseFloat(document.getElementById('startKm').value) || 0;
+      const endKm = parseFloat(document.getElementById('endKm').value) || 0;
+      const rate = parseFloat(document.getElementById('ratePerKm').value) || 14;
+      const totalKm = Math.max(0, endKm - startKm);
+
+      if (totalKm <= 0) {
+        alert('Closing KM must be greater than Start KM!');
+        return;
+      }
+      addItemRow(`Trip Distance (${startKm} to ${endKm} km)`, totalKm, rate);
+    }
+
+    function addItemRow(desc = '', qty = 1, rate = '') {
+      const container = document.getElementById('itemsContainer');
+      const row = document.createElement('div');
+      row.className = 'item-row';
+
+      row.innerHTML = `
+        <input type="text" class="item-desc" placeholder="Item or work" value="${desc}" oninput="calculateBill()" />
+        <input type="number" class="item-qty" min="1" value="${qty}" oninput="calculateBill()" />
+        <input type="number" class="item-rate" min="0" placeholder="0" value="${rate}" oninput="calculateBill()" />
+        <button type="button" class="btn-remove" title="Remove row" onclick="removeRow(this)">✕</button>
+      `;
+
+      container.appendChild(row);
+      calculateBill();
+    }
+
+    function removeRow(btn) {
+      const container = document.getElementById('itemsContainer');
+      if (container.children.length > 1) {
+        btn.parentElement.remove();
+      } else {
+        const row = btn.parentElement;
+        row.querySelector('.item-desc').value = '';
+        row.querySelector('.item-qty').value = 1;
+        row.querySelector('.item-rate').value = '';
+      }
+      calculateBill();
+    }
+
+    function calculateBill() {
+      const catKey = document.getElementById('serviceType').value;
+      const cfg = categoryConfig[catKey] || categoryConfig.travels;
+
+      // Use shop owner's entered name, or fall back to Category Default Title (Never "Fixr")
+      const bizName = document.getElementById('bizName').value.trim() || cfg.defaultTitle;
+      const bizPhone = document.getElementById('bizPhone').value.trim();
+      const bizAddress = document.getElementById('bizAddress').value.trim();
+      const bizUpi = document.getElementById('bizUpi').value.trim();
+
+      document.getElementById('outBizName').innerText = bizName;
+      document.getElementById('outBizAddress').innerText = bizAddress;
+      document.getElementById('outBizAddress').style.display = bizAddress ? 'block' : 'none';
+
+      document.getElementById('outBizPhone').innerText = bizPhone;
+      document.getElementById('outBizPhoneLine').style.display = bizPhone ? 'block' : 'none';
+
+      document.getElementById('outBizUpi').innerText = bizUpi;
+      document.getElementById('outUpiLine').style.display = bizUpi ? 'inline' : 'none';
+
+      const invNo = document.getElementById('invoiceNo').value.trim() || 'INV-101';
+      const payMode = document.getElementById('payMode').value;
+      const customer = document.getElementById('customerName').value.trim() || 'Walk-in Customer';
+      const phone = document.getElementById('customerPhone').value.trim() || 'N/A';
+
+      document.getElementById('outInvNo').innerText = invNo;
+      document.getElementById('outPayMode').innerText = payMode;
+      document.getElementById('outCustomer').innerText = customer;
+      document.getElementById('outPhone').innerText = phone;
+
+      const tripBanner = document.getElementById('outTripBanner');
+      const vehicle = document.getElementById('vehicleInfo').value.trim();
+      const route = document.getElementById('tripRoute').value.trim();
+      const startKm = parseFloat(document.getElementById('startKm').value) || 0;
+      const endKm = parseFloat(document.getElementById('endKm').value) || 0;
+      const dist = endKm > startKm ? (endKm - startKm) : 0;
+
+      if (catKey === 'travels' && (vehicle || route || dist > 0)) {
+        tripBanner.style.display = 'block';
+        let parts = [];
+        if (vehicle) parts.push(`<strong>Vehicle:</strong> ${vehicle}`);
+        if (route) parts.push(`<strong>Route:</strong> ${route}`);
+        if (dist > 0) parts.push(`<strong>Meter:</strong> ${startKm}→${endKm} (${dist} KM)`);
+        tripBanner.innerHTML = parts.join(' &nbsp;|&nbsp; ');
+      } else {
+        tripBanner.style.display = 'none';
+      }
+
+      const rows = document.querySelectorAll('.item-row');
+      const tbody = document.getElementById('outItemsBody');
+      tbody.innerHTML = '';
+
+      let subtotal = 0;
+
+      rows.forEach(row => {
+        const desc = row.querySelector('.item-desc').value.trim() || 'Service Charge';
+        const qty = parseFloat(row.querySelector('.item-qty').value) || 0;
+        const rate = parseFloat(row.querySelector('.item-rate').value) || 0;
+        const amount = qty * rate;
+        subtotal += amount;
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${desc}</td>
+          <td class="num">${qty}</td>
+          <td class="num">₹${rate.toFixed(2)}</td>
+          <td class="num"><strong>₹${amount.toFixed(2)}</strong></td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      const discount = parseFloat(document.getElementById('discount').value) || 0;
+      const gstPercent = parseFloat(document.getElementById('gstRate').value) || 0;
+
+      const taxable = Math.max(0, subtotal - discount);
+      const gstAmount = (taxable * gstPercent) / 100;
+      const grandTotal = taxable + gstAmount;
+
+      document.getElementById('outSubtotal').innerText = '₹' + subtotal.toFixed(2);
+      document.getElementById('outDiscount').innerText = '- ₹' + discount.toFixed(2);
+      document.getElementById('outGstPercent').innerText = gstPercent;
+      document.getElementById('outGstAmount').innerText = '₹' + gstAmount.toFixed(2);
+      document.getElementById('outGrandTotal').innerText = '₹' + grandTotal.toFixed(2);
+
+      return {
+        bizName, bizPhone, bizUpi, service: cfg.badge, invNo, payMode, customer, phone, grandTotal, subtotal, discount, gstAmount
+      };
+    }
+
+    function shareOnWhatsApp() {
+      const data = calculateBill();
+      const rows = document.querySelectorAll('.item-row');
+      let itemLines = '';
+
+      rows.forEach((row, idx) => {
+        const desc = row.querySelector('.item-desc').value.trim() || 'Service';
+        const qty = parseFloat(row.querySelector('.item-qty').value) || 0;
+        const rate = parseFloat(row.querySelector('.item-rate').value) || 0;
+        itemLines += `${idx + 1}. ${desc} (${qty} x ₹${rate}) = ₹${(qty * rate).toFixed(2)}\n`;
+      });
+
+      let msg = `*${data.bizName}*\n`;
+      msg += `${data.service}\n`;
+      msg += `Invoice: *${data.invNo}* | Date: ${todayStr}\n`;
+      msg += `Customer: *${data.customer}*\n\n`;
+      msg += `*Bill Details:*\n${itemLines}\n`;
+      if (data.discount > 0) msg += `Discount: -₹${data.discount.toFixed(2)}\n`;
+      if (data.gstAmount > 0) msg += `GST: ₹${data.gstAmount.toFixed(2)}\n`;
+      msg += `*Total Payable: ₹${data.grandTotal.toFixed(2)}*\n`;
+      msg += `Payment Mode: ${data.payMode}\n`;
+      if (data.bizUpi) msg += `UPI ID: ${data.bizUpi}\n`;
+      msg += `\nThank you for your business!`;
+
+      const cleanPhone = data.phone.replace(/\D/g, '');
+      const waPhone = cleanPhone.length === 10 ? '91' + cleanPhone : cleanPhone;
+      const waUrl = waPhone
+        ? `https://wa.me/${waPhone}?text=${encodeURIComponent(msg)}`
+        : `https://wa.me/?text=${encodeURIComponent(msg)}`;
+
+      window.open(waUrl, '_blank');
+    }
+
+    function saveCurrentBill() {
+      const data = calculateBill();
+      try {
+        const history = JSON.parse(localStorage.getItem('qb_history') || '[]');
+        history.unshift({
+          invNo: data.invNo,
+          date: todayStr,
+          customer: data.customer,
+          service: data.service,
+          total: data.grandTotal.toFixed(2)
+        });
+        localStorage.setItem('qb_history', JSON.stringify(history.slice(0, 10)));
+        renderHistory();
+      } catch (e) {}
+    }
+
+    function renderHistory() {
+      try {
+        const history = JSON.parse(localStorage.getItem('qb_history') || '[]');
+        const container = document.getElementById('historyList');
+        if (history.length === 0) {
+          container.innerHTML = 'No saved bills yet. Click "Save Bill" below the invoice.';
+          return;
+        }
+        container.innerHTML = history.map(item => `
+          <div class="history-item">
+            <span><strong>${item.invNo}</strong> — ${item.customer} (${item.service})</span>
+            <strong style="color: var(--accent);">₹${item.total}</strong>
+          </div>
+        `).join('');
+      } catch (e) {}
+    }
+
+    function clearHistory() {
+      try {
+        localStorage.removeItem('qb_history');
+        renderHistory();
+      } catch (e) {}
+    }
+
+    function startNewBill() {
+      const currentInv = document.getElementById('invoiceNo').value;
+      const match = currentInv.match(/(\d+)$/);
+      if (match) {
+        const nextNum = parseInt(match[1], 10) + 1;
+        document.getElementById('invoiceNo').value = currentInv.replace(/(\d+)$/, nextNum);
+      }
+      document.getElementById('customerName').value = '';
+      document.getElementById('customerPhone').value = '';
+      document.getElementById('vehicleInfo').value = '';
+      document.getElementById('tripRoute').value = '';
+      document.getElementById('startKm').value = '';
+      document.getElementById('endKm').value = '';
+      document.getElementById('discount').value = '0';
+
+      document.getElementById('itemsContainer').innerHTML = '';
+      addItemRow('', 1, '');
+    }
+
+    loadBizProfile();
+    onCategoryChange();
+    addItemRow('Base Trip Package', 1, 1500);
+    addItemRow('Toll & Parking Charges', 1, 180);
+    renderHistory();
+  </script>
+</body>
+</html>
