@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Free Invoice Creator — Travels, Electrician & Plumber Bill Maker</title>
+  <title>bill.fixrservice.in — Free Travels, Electrician & Plumber Invoice Maker</title>
 
-  <!-- PART 1: CSS (Screen Layout + Fixr Website Ad Banner + Category Model Invoice Print) -->
+  <!-- PART 1: CSS (Mobile-First UI + Fixr Website Ad Banners + Category Model Print Invoice) -->
   <style>
     :root {
-      --primary: #1e40af;
-      --primary-dark: #1e3a8a;
+      --primary: #102341;
       --primary-light: #dbeafe;
+      --accent: #d97706;
       --bg: #f1f5f9;
       --card: #ffffff;
       --text: #0f172a;
       --muted: #475569;
       --border: #cbd5e1;
-      --accent: #047857;
+      --success: #047857;
       --whatsapp: #16a34a;
       --danger: #dc2626;
     }
@@ -39,27 +39,29 @@
     }
 
     .page-wrap {
-      max-width: 1100px;
+      max-width: 1120px;
       margin: 0 auto;
-      padding: 14px 12px 40px 12px;
+      padding: 12px 12px 44px 12px;
       width: 100%;
     }
 
-    /* FIXR WEBSITE AD BANNER (Shown ONLY on Website, NEVER on Printed Bill) */
+    /* ==========================================================
+       FIXR.IN WEBSITE AD BANNER (Shown on Site ONLY, Never Printed)
+       ========================================================== */
     .fixr-ad-banner {
       width: 100%;
       margin: 0 0 16px 0;
-      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 60%, #1d4ed8 100%);
+      background: linear-gradient(135deg, #0f172a 0%, #102341 55%, #1d4ed8 100%);
       color: #ffffff;
-      padding: 16px 20px;
+      padding: 16px 18px;
       border-radius: 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
       gap: 12px;
-      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.18);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.18);
+      border: 1px solid rgba(251, 191, 36, 0.3);
     }
 
     .fixr-ad-left {
@@ -69,61 +71,103 @@
     }
 
     .fixr-logo-badge {
-      background: #f59e0b;
+      background: linear-gradient(135deg, #fbbf24, #d97706);
       color: #0f172a;
       font-weight: 900;
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       padding: 10px 14px;
       border-radius: 10px;
-      letter-spacing: 0.5px;
-      box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
+      letter-spacing: 0.8px;
+      box-shadow: 0 3px 10px rgba(245, 158, 11, 0.35);
+      flex-shrink: 0;
     }
 
     .fixr-ad-text h1 {
       margin: 0;
-      font-size: 1.15rem;
+      font-size: 1.12rem;
       color: #ffffff;
     }
 
     .fixr-ad-text p {
       margin: 4px 0 0 0;
-      font-size: 0.82rem;
-      color: #e2e8f0;
+      font-size: 0.8rem;
+      color: #cbd5e1;
+      line-height: 1.35;
     }
 
     .fixr-ad-tag {
       display: inline-block;
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(251, 191, 36, 0.2);
       color: #fde68a;
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 700;
       text-transform: uppercase;
       padding: 2px 8px;
       border-radius: 4px;
       margin-bottom: 4px;
+      letter-spacing: 0.4px;
     }
 
     .fixr-ad-btn {
-      background: #f59e0b;
+      background: #fbbf24;
       color: #0f172a;
       text-decoration: none;
       font-weight: 800;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       padding: 10px 16px;
       border-radius: 999px;
       white-space: nowrap;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
+    }
+
+    /* Category Switcher Tabs at Top of Form */
+    .category-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .cat-tab {
+      padding: 10px 8px;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      background: #f8fafc;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 0.84rem;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s ease;
+    }
+
+    .cat-tab.active-travels {
+      border-color: #1d4ed8;
+      background: #eff6ff;
+      color: #1e3a8a;
+    }
+
+    .cat-tab.active-electrician {
+      border-color: #d97706;
+      background: #fffbeb;
+      color: #92400e;
+    }
+
+    .cat-tab.active-plumber {
+      border-color: #0284c7;
+      background: #f0f9ff;
+      color: #075985;
     }
 
     .container {
       width: 100%;
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: 1.08fr 0.92fr;
       gap: 18px;
       align-items: start;
     }
 
-    @media (max-width: 860px) {
+    @media (max-width: 880px) {
       .container {
         grid-template-columns: 1fr;
       }
@@ -141,7 +185,7 @@
 
     .card h2 {
       margin-top: 0;
-      font-size: 1.02rem;
+      font-size: 1rem;
       border-bottom: 1px solid var(--border);
       padding-bottom: 10px;
       color: var(--primary);
@@ -153,7 +197,7 @@
     }
 
     .section-tag {
-      font-size: 0.74rem;
+      font-size: 0.72rem;
       color: var(--muted);
       font-weight: 500;
     }
@@ -184,7 +228,7 @@
 
     label {
       display: block;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 600;
       margin-bottom: 4px;
       color: var(--text);
@@ -193,24 +237,24 @@
     select, input {
       width: 100%;
       max-width: 100%;
-      padding: 10px 12px;
-      margin-bottom: 10px;
+      padding: 9px 11px;
+      margin-bottom: 9px;
       border: 1px solid var(--border);
       border-radius: 8px;
-      font-size: 0.94rem;
+      font-size: 0.92rem;
       background: #ffffff;
       color: var(--text);
     }
 
     input:focus, select:focus {
-      outline: 2px solid var(--primary);
-      border-color: var(--primary);
+      outline: 2px solid #2563eb;
+      border-color: #2563eb;
     }
 
     .travels-box {
       background: #f8fafc;
       border: 1px solid #bfdbfe;
-      border-radius: 8px;
+      border-radius: 10px;
       padding: 12px;
       margin-bottom: 12px;
       width: 100%;
@@ -219,7 +263,7 @@
     .travels-box-title {
       font-size: 0.82rem;
       font-weight: 700;
-      color: var(--primary);
+      color: #1e3a8a;
       margin-bottom: 8px;
     }
 
@@ -227,25 +271,29 @@
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .preset-chip {
       background: #eff6ff;
-      color: var(--primary);
+      color: #1e40af;
       border: 1px solid #bfdbfe;
       padding: 6px 10px;
       border-radius: 999px;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 600;
       cursor: pointer;
     }
 
+    .preset-chip:active, .preset-chip:hover {
+      background: #dbeafe;
+    }
+
     .items-header {
       display: grid;
-      grid-template-columns: minmax(0, 2fr) minmax(0, 0.7fr) minmax(0, 1fr) 32px;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 0.7fr) minmax(0, 1fr) 32px;
       gap: 6px;
-      font-size: 0.76rem;
+      font-size: 0.75rem;
       font-weight: 700;
       color: var(--muted);
       margin-bottom: 6px;
@@ -254,10 +302,10 @@
 
     .item-row {
       display: grid;
-      grid-template-columns: minmax(0, 2fr) minmax(0, 0.7fr) minmax(0, 1fr) 32px;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 0.7fr) minmax(0, 1fr) 32px;
       gap: 6px;
       align-items: center;
-      margin-bottom: 8px;
+      margin-bottom: 7px;
       width: 100%;
     }
 
@@ -271,7 +319,7 @@
       color: var(--danger);
       border: 1px solid #fecaca;
       border-radius: 8px;
-      height: 36px;
+      height: 35px;
       width: 32px;
       font-weight: 700;
       cursor: pointer;
@@ -280,12 +328,12 @@
 
     .btn-add {
       background: #eff6ff;
-      color: var(--primary);
-      border: 1px dashed var(--primary);
+      color: #1e40af;
+      border: 1px dashed #1e40af;
       margin-top: 2px;
-      margin-bottom: 14px;
-      padding: 10px;
-      font-size: 0.88rem;
+      margin-bottom: 12px;
+      padding: 9px;
+      font-size: 0.86rem;
       font-weight: 600;
       border-radius: 8px;
       cursor: pointer;
@@ -304,7 +352,7 @@
       border: none;
       border-radius: 8px;
       font-size: 0.88rem;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
       color: #ffffff;
       display: flex;
@@ -314,141 +362,155 @@
       text-align: center;
     }
 
-    .btn-print { background: var(--primary); }
+    .btn-print { background: #1e40af; }
     .btn-whatsapp { background: var(--whatsapp); }
     .btn-save { background: #334155; }
     .btn-new { background: #f1f5f9; color: var(--text); border: 1px solid var(--border); }
 
     /* =====================================================
-       MODEL CUSTOMER INVOICE (With Category Visual Banner)
+       MODEL CUSTOMER INVOICE (Printed on A4 / Saved as PDF)
        ===================================================== */
     .invoice-box {
-      border: 1px solid #cbd5e1;
-      border-radius: 12px;
+      border: 1.5px solid #1e293b;
+      border-radius: 10px;
       overflow: hidden;
       background: #ffffff;
       width: 100%;
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
     }
 
-    /* Category Model Banner inside Invoice */
+    .invoice-blessing-top {
+      text-align: center;
+      font-size: 0.76rem;
+      font-weight: 600;
+      padding: 5px 10px 2px 10px;
+      color: #fde68a;
+      background: rgba(0, 0, 0, 0.18);
+    }
+
     .invoice-hero {
-      padding: 18px 20px;
       color: #ffffff;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 14px;
-      background: linear-gradient(135deg, #1e40af, #1d4ed8);
+      background: linear-gradient(135deg, #102341 0%, #1d4ed8 100%);
     }
 
     .invoice-hero.theme-travels {
-      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+      background: linear-gradient(135deg, #102341 0%, #1e40af 100%);
     }
 
     .invoice-hero.theme-electrician {
-      background: linear-gradient(135deg, #78350f 0%, #d97706 100%);
+      background: linear-gradient(135deg, #451a03 0%, #b45309 100%);
     }
 
     .invoice-hero.theme-plumber {
-      background: linear-gradient(135deg, #0f766e 0%, #0284c7 100%);
+      background: linear-gradient(135deg, #0f766e 0%, #0369a1 100%);
+    }
+
+    .invoice-hero-main {
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
     }
 
     .hero-left {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
     }
 
     .category-art-box {
-      width: 68px;
-      height: 68px;
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.95);
+      width: 64px;
+      height: 64px;
+      border-radius: 12px;
+      background: #ffffff;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-      padding: 6px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
+      padding: 4px;
+      overflow: hidden;
     }
 
-    .category-art-box svg {
+    .category-art-box svg, .category-art-box img {
       width: 56px;
       height: 56px;
-    }
-
-    .shop-title {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: #ffffff;
-      margin: 0 0 3px 0;
-      letter-spacing: 0.2px;
+      object-fit: contain;
     }
 
     .shop-cat-pill {
       display: inline-block;
-      background: rgba(255, 255, 255, 0.22);
-      color: #ffffff;
-      font-size: 0.74rem;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fde68a;
+      font-size: 0.7rem;
       font-weight: 700;
-      padding: 3px 9px;
+      padding: 2px 8px;
       border-radius: 999px;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
+    }
+
+    .shop-title {
+      font-size: 1.18rem;
+      font-weight: 800;
+      color: #fbbf24;
+      margin: 0 0 2px 0;
     }
 
     .shop-sub {
-      font-size: 0.78rem;
-      color: rgba(255, 255, 255, 0.9);
-      margin: 2px 0;
+      font-size: 0.76rem;
+      color: rgba(255, 255, 255, 0.92);
+      margin: 1px 0;
     }
 
     .invoice-body {
-      padding: 18px;
+      padding: 14px 16px;
     }
 
     .meta-grid {
       display: flex;
       justify-content: space-between;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      padding: 10px 12px;
+      border: 1px solid #cbd5e1;
+      padding: 9px 12px;
       border-radius: 8px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       gap: 8px;
       flex-wrap: wrap;
     }
 
-    .trip-summary-banner {
-      font-size: 0.78rem;
-      background: #eff6ff;
-      border-left: 4px solid #2563eb;
-      color: #1e3a8a;
-      padding: 8px 10px;
-      border-radius: 4px;
-      margin-bottom: 12px;
+    .trip-summary-grid {
       display: none;
+      width: 100%;
+      border: 1px solid #93c5fd;
+      background: #eff6ff;
+      border-radius: 8px;
+      padding: 8px 10px;
+      margin-bottom: 10px;
+      font-size: 0.78rem;
+      color: #1e3a8a;
+      line-height: 1.5;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      margin: 8px 0 12px 0;
-      font-size: 0.83rem;
+      margin: 6px 0 10px 0;
+      font-size: 0.82rem;
     }
 
     th {
       background: #f1f5f9;
       text-align: left;
-      padding: 8px 6px;
-      border-bottom: 2px solid var(--border);
-      color: #334155;
+      padding: 7px 6px;
+      border-top: 1.5px solid #334155;
+      border-bottom: 1.5px solid #334155;
+      color: #0f172a;
       font-weight: 700;
     }
 
     td {
-      padding: 8px 6px;
+      padding: 7px 6px;
       border-bottom: 1px solid #e2e8f0;
       word-break: break-word;
     }
@@ -461,56 +523,54 @@
     .summary-row {
       display: flex;
       justify-content: space-between;
-      padding: 4px 0;
-      font-size: 0.86rem;
+      padding: 3px 0;
+      font-size: 0.84rem;
       color: var(--muted);
     }
 
     .total-box {
-      margin-top: 10px;
-      padding: 12px 14px;
+      margin-top: 8px;
+      padding: 10px 12px;
       background: #ecfdf5;
-      border: 1px solid #6ee7b7;
+      border: 1.5px solid #6ee7b7;
       border-radius: 8px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 1.15rem;
+      font-size: 1.08rem;
       font-weight: 800;
-      color: var(--accent);
+      color: var(--success);
     }
 
     .invoice-footer {
-      margin-top: 16px;
+      margin-top: 14px;
       padding-top: 10px;
       border-top: 1px dashed var(--border);
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       color: var(--muted);
     }
 
-    .sign-box {
-      text-align: right;
-    }
-
     .sign-line {
-      width: 110px;
-      border-top: 1px solid #94a3b8;
-      margin-top: 22px;
-      padding-top: 4px;
+      width: 115px;
+      border-top: 1px solid #475569;
+      margin-top: 24px;
+      padding-top: 3px;
+      text-align: center;
+      font-weight: 700;
+      color: var(--text);
     }
 
-    /* Footer Fixr Ad on Website only */
     .fixr-footer-ad {
-      margin-top: 12px;
-      background: #eff6ff;
-      border: 1px dashed #93c5fd;
+      margin-top: 14px;
+      background: linear-gradient(90deg, #eff6ff, #fef3c7);
+      border: 1px solid #bfdbfe;
       border-radius: 10px;
-      padding: 12px 16px;
+      padding: 12px 14px;
       text-align: center;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       color: #1e3a8a;
     }
 
@@ -524,7 +584,7 @@
       gap: 8px;
     }
 
-    /* PRINT / PDF MODE: Hide ALL Fixr Ads & Forms, Print ONLY Customer Bill with Category Image */
+    /* PRINT / PDF MODE: Hide Fixr Ads & Input Forms, Print ONLY Customer Bill */
     @media print {
       body, .page-wrap {
         background: #ffffff !important;
@@ -544,79 +604,96 @@
         padding: 0 !important;
         margin: 0 !important;
       }
-      .invoice-box {
-        border: 1px solid #94a3b8 !important;
-        box-shadow: none !important;
-      }
     }
   </style>
 </head>
 <body>
 
   <div class="page-wrap">
-    <!-- FIXR WEBSITE AD BANNER (Visible on Website ONLY - Hidden on Print/PDF) -->
+    <!-- FIXR WEBSITE AD BANNER (Visible on Website ONLY - Never on Customer Bill) -->
     <div class="fixr-ad-banner no-print">
       <div class="fixr-ad-left">
         <div class="fixr-logo-badge">FIXR</div>
         <div class="fixr-ad-text">
-          <span class="fixr-ad-tag">Sponsored by FixrService.in</span>
-          <h1>Free Instant Bill & Invoice Maker</h1>
-          <p>Create professional customer bills for Travels, Electrician & Plumber works — Free tool by Fixr</p>
+          <span class="fixr-ad-tag">bill.fixrservice.in • Free Business Tool</span>
+          <h1>Instant Customer Invoice & Trip Sheet Maker</h1>
+          <p>Free billing web app for Travels, Electricians & Plumbers — Powered by FixrService.in</p>
         </div>
       </div>
-      <a href="https://fixrservice.in" target="_blank" class="fixr-ad-btn">Visit FixrService.in →</a>
+      <a href="https://fixrservice.in" target="_blank" class="fixr-ad-btn">Book Services at FixrService.in →</a>
     </div>
 
     <div class="container">
-      <!-- LEFT COLUMN: Input Controls (Hidden when printing PDF) -->
+      <!-- LEFT COLUMN: Input Form (Hidden when printing PDF) -->
       <div class="no-print">
-        <!-- 1. Business Profile Card (For the Travels/Electrician/Plumber Shop Owner) -->
+
+        <!-- 1. Shop / Business Details -->
         <div class="card">
           <h2>
-            <span>1. Your Shop / Business Details</span>
+            <span>1. Your Shop / Travels Details</span>
             <button type="button" class="preset-chip" onclick="resetBizProfile()">Clear</button>
           </h2>
           <div class="grid-2 grid-2-mobile-full">
             <div>
-              <label for="bizName">Your Business / Shop Name</label>
-              <input type="text" id="bizName" value="" placeholder="e.g., Sri Balaji Travels / Kumar Electricals" oninput="onBizInput()" onkeyup="onBizInput()" onchange="onBizInput()" />
+              <label for="bizName">Your Business / Travels Name</label>
+              <input type="text" id="bizName" value="" placeholder="e.g., Sharmi Travels / Kumar Electricals" oninput="onBizInput()" onkeyup="onBizInput()" onchange="onBizInput()" />
             </div>
             <div>
-              <label for="bizPhone">Your Shop Phone Number</label>
-              <input type="tel" id="bizPhone" value="" placeholder="e.g., 98765 43210" oninput="onBizInput()" onkeyup="onBizInput()" onchange="onBizInput()" />
+              <label for="bizPhone">Your Mobile / WhatsApp No.</label>
+              <input type="tel" id="bizPhone" value="" placeholder="e.g., +91 98949 05037" oninput="onBizInput()" onkeyup="onBizInput()" onchange="onBizInput()" />
             </div>
           </div>
           <div class="grid-2 grid-2-mobile-full">
             <div>
-              <label for="bizAddress">Shop City / Address</label>
-              <input type="text" id="bizAddress" value="" placeholder="e.g., Anna Nagar, Chennai" oninput="onBizInput()" onkeyup="onBizInput()" onchange="onBizInput()" />
+              <label for="bizAddress">Shop / Office Address</label>
+              <input type="text" id="bizAddress" value="" placeholder="e.g., Kotturpuram, Chennai - 600085" oninput="onBizInput()" onkeyup="onBizInput()" onchange="onBizInput()" />
             </div>
             <div>
-              <label for="bizUpi">Your UPI ID / GPay Number</label>
-              <input type="text" id="bizUpi" value="" placeholder="e.g., 9876543210@upi" oninput="onBizInput()" onkeyup="onBizInput()" onchange="onBizInput()" />
+              <label for="bizReg">Regt No. / GST / UPI ID (Optional)</label>
+              <input type="text" id="bizReg" value="" placeholder="e.g., Regt: TN-02-0156573 or UPI ID" oninput="onBizInput()" onkeyup="onBizInput()" onchange="onBizInput()" />
+            </div>
+          </div>
+          <div class="grid-2 grid-2-mobile-full">
+            <div>
+              <label for="bizBlessing">Top Blessing Text (Optional)</label>
+              <input type="text" id="bizBlessing" value="உ  |  Sri Ayyappan Thunai" placeholder="e.g., உ | Sri Ayyappan Thunai" oninput="onBizInput()" onkeyup="onBizInput()" onchange="onBizInput()" />
+            </div>
+            <div>
+              <label for="logoUpload">Upload Your Shop Logo (Optional)</label>
+              <input type="file" id="logoUpload" accept="image/*" onchange="handleLogoUpload(event)" style="padding: 6px;" />
             </div>
           </div>
         </div>
 
-        <!-- 2. Customer & Service Details Card -->
+        <!-- 2. Category Selection & Customer Bill Items -->
         <div class="card">
           <h2>
-            <span>2. Select Category & Enter Bill Items</span>
-            <span class="section-tag">Changes Bill Model Image</span>
+            <span>2. Choose Category & Enter Bill Details</span>
+            <span class="section-tag">Auto-switches Bill Model</span>
           </h2>
+
+          <!-- Quick 1-Tap Category Switcher -->
+          <div class="category-tabs">
+            <button type="button" id="tab-travels" class="cat-tab active-travels" onclick="selectCategory('travels')">
+              🚗 Travels & Cab
+            </button>
+            <button type="button" id="tab-electrician" class="cat-tab" onclick="selectCategory('electrician')">
+              ⚡ Electrician
+            </button>
+            <button type="button" id="tab-plumber" class="cat-tab" onclick="selectCategory('plumber')">
+              🔧 Plumber
+            </button>
+          </div>
+          <input type="hidden" id="serviceType" value="travels" />
 
           <div class="grid-3">
             <div>
-              <label for="serviceType">Service Category</label>
-              <select id="serviceType" onchange="onCategoryChange()">
-                <option value="travels">🚗 Travels & Cab</option>
-                <option value="electrician">⚡ Electrician</option>
-                <option value="plumber">🔧 Plumber</option>
-              </select>
+              <label for="invoiceNo">Bill / Invoice No.</label>
+              <input type="text" id="invoiceNo" value="INV-101" oninput="calculateBill()" />
             </div>
             <div>
-              <label for="invoiceNo">Invoice No.</label>
-              <input type="text" id="invoiceNo" value="INV-101" oninput="calculateBill()" />
+              <label for="invoiceDate">Bill Date</label>
+              <input type="text" id="invoiceDate" value="" oninput="calculateBill()" />
             </div>
             <div>
               <label for="payMode">Payment Mode</label>
@@ -624,59 +701,69 @@
                 <option value="UPI / GPay">UPI / GPay</option>
                 <option value="Cash">Cash</option>
                 <option value="Bank Transfer">Bank Transfer</option>
-                <option value="Pending (Unpaid)">Pending</option>
+                <option value="Pending">Pending</option>
               </select>
             </div>
           </div>
 
           <div class="grid-2 grid-2-mobile-full">
             <div>
-              <label for="customerName">Customer Name</label>
-              <input type="text" id="customerName" placeholder="e.g., Ramesh Kumar" oninput="calculateBill()" />
+              <label for="customerName">Customer / Arranged By</label>
+              <input type="text" id="customerName" placeholder="e.g., Mr. Murali Krishnan" oninput="calculateBill()" />
             </div>
             <div>
               <label for="customerPhone">Customer WhatsApp / Phone</label>
-              <input type="tel" id="customerPhone" placeholder="e.g., 9876543210" oninput="calculateBill()" />
+              <input type="tel" id="customerPhone" placeholder="e.g., 9884334097" oninput="calculateBill()" />
             </div>
           </div>
 
-          <!-- Special Trip Details Box (Only visible for Travels) -->
+          <!-- Travels Trip Sheet Box (Shown when Travels is active) -->
           <div class="travels-box" id="travelsExtraBox">
-            <div class="travels-box-title">🚗 Travels Trip Meter & Route (Optional)</div>
+            <div class="travels-box-title">🚗 Travels Trip Sheet Details (Car No, Route, KM & Time)</div>
             <div class="grid-2 grid-2-mobile-full">
               <div>
-                <label for="vehicleInfo">Vehicle No. & Model</label>
-                <input type="text" id="vehicleInfo" placeholder="e.g., TN-01-AB-1234 (Innova)" oninput="calculateBill()" />
+                <label for="vehicleInfo">Car No. & Model</label>
+                <input type="text" id="vehicleInfo" placeholder="e.g., TN 07 DB 2589 (Innova / Etios)" oninput="calculateBill()" />
               </div>
               <div>
-                <label for="tripRoute">Pickup → Drop Route</label>
-                <input type="text" id="tripRoute" placeholder="e.g., Chennai to Pondicherry" oninput="calculateBill()" />
+                <label for="tripRoute">Report To / Pickup → Drop Route</label>
+                <input type="text" id="tripRoute" placeholder="e.g., Alwarpet to Airport" oninput="calculateBill()" />
               </div>
             </div>
             <div class="grid-3">
               <div>
-                <label for="startKm">Start KM</label>
-                <input type="number" id="startKm" placeholder="12500" oninput="calculateBill()" />
+                <label for="startKm">Starting KM</label>
+                <input type="number" id="startKm" placeholder="88240" oninput="calculateBill()" />
               </div>
               <div>
                 <label for="endKm">Closing KM</label>
-                <input type="number" id="endKm" placeholder="12780" oninput="calculateBill()" />
+                <input type="number" id="endKm" placeholder="88275" oninput="calculateBill()" />
               </div>
               <div>
                 <label for="ratePerKm">Rate/KM (₹)</label>
                 <input type="number" id="ratePerKm" value="14" oninput="calculateBill()" />
               </div>
             </div>
-            <button type="button" class="preset-chip" onclick="addKmRowToBill()">+ Add Calculated KM Trip to Bill</button>
+            <div class="grid-2 grid-2-mobile-full">
+              <div>
+                <label for="startTime">Starting Time</label>
+                <input type="text" id="startTime" placeholder="e.g., 10:30 AM" oninput="calculateBill()" />
+              </div>
+              <div>
+                <label for="endTime">Closing Time</label>
+                <input type="text" id="endTime" placeholder="e.g., 12:30 PM" oninput="calculateBill()" />
+              </div>
+            </div>
+            <button type="button" class="preset-chip" onclick="addKmRowToBill()">+ Add Calculated KM Charge to Bill</button>
           </div>
 
-          <!-- Quick-Add Preset Buttons -->
-          <label>Quick-Add Common Items (Click to add):</label>
+          <!-- Quick-Add Preset Chips -->
+          <label>Quick-Add Common Items (Tap to add row):</label>
           <div class="preset-bar" id="presetBar"></div>
 
-          <!-- Dynamic Item Rows -->
+          <!-- Itemized Rows -->
           <div class="items-header">
-            <span>Item / Work Description</span>
+            <span>Particulars / Work Description</span>
             <span>Qty/KM</span>
             <span>Rate (₹)</span>
             <span></span>
@@ -684,11 +771,15 @@
           <div id="itemsContainer"></div>
 
           <button type="button" class="btn-add" onclick="addItemRow('', 1, '')">
-            + Add Another Item Row
+            + Add Another Charge / Item Row
           </button>
 
-          <!-- Discount & GST -->
-          <div class="grid-2">
+          <!-- Advance Paid, Discount & GST -->
+          <div class="grid-3">
+            <div>
+              <label for="advancePaid">Advance Paid (₹)</label>
+              <input type="number" id="advancePaid" value="0" min="0" oninput="calculateBill()" />
+            </div>
             <div>
               <label for="discount">Discount (₹)</label>
               <input type="number" id="discount" value="0" min="0" oninput="calculateBill()" />
@@ -705,68 +796,69 @@
           </div>
         </div>
 
-        <!-- 3. Saved Bills History Card -->
+        <!-- 3. Saved Bills History -->
         <div class="card">
           <h2>
             <span>3. Recent Saved Bills</span>
             <button type="button" class="preset-chip" onclick="clearHistory()">Clear</button>
           </h2>
           <div id="historyList" style="font-size: 0.82rem; color: var(--muted);">
-            No saved bills yet. Click "Save Bill" below the invoice.
+            No saved bills yet. Tap "Save Bill" below the invoice.
           </div>
         </div>
       </div>
 
-      <!-- RIGHT COLUMN: Model Customer Invoice (NO Fixr branding inside bill!) -->
+      <!-- RIGHT COLUMN: Model Customer Invoice Preview (No Fixr Ads on Bill!) -->
       <div>
         <div class="card">
           <h2 class="no-print">
-            <span>Customer Bill Preview (Model Invoice)</span>
-            <span class="section-tag">No Ads on Printed Bill</span>
+            <span>Customer Bill Preview (Print-Ready)</span>
+            <span class="section-tag">Zero Ads on Bill</span>
           </h2>
 
-          <!-- PRINTABLE CUSTOMER INVOICE -->
+          <!-- PRINTABLE CUSTOMER BILL -->
           <div class="invoice-box" id="printableInvoice">
-            <!-- Category Model Header with Custom Category Graphic Image -->
             <div class="invoice-hero theme-travels" id="invoiceHero">
-              <div class="hero-left">
-                <!-- Category Vector Illustration Image -->
-                <div class="category-art-box" id="categoryArtBox"></div>
-                <div>
-                  <span class="shop-cat-pill" id="outServiceBadge">🚗 TRAVELS & CAB SERVICE</span>
-                  <h3 class="shop-title" id="outBizName">Travels & Cab Invoice</h3>
-                  <p class="shop-sub" id="outBizAddress"></p>
-                  <p class="shop-sub" id="outBizPhoneLine" style="display: none;">Phone: <strong id="outBizPhone"></strong></p>
+              <div class="invoice-blessing-top" id="outBlessing">உ &nbsp;|&nbsp; Sri Ayyappan Thunai</div>
+              <div class="invoice-hero-main">
+                <div class="hero-left">
+                  <div class="category-art-box" id="categoryArtBox"></div>
+                  <div>
+                    <span class="shop-cat-pill" id="outServiceBadge">🚗 TRAVELS & CAB SERVICE</span>
+                    <h3 class="shop-title" id="outBizName">Travels & Cab Invoice</h3>
+                    <p class="shop-sub" id="outBizReg" style="display: none;"></p>
+                    <p class="shop-sub" id="outBizAddress"></p>
+                    <p class="shop-sub" id="outBizPhoneLine" style="display: none;">Mobile: <strong id="outBizPhone"></strong></p>
+                  </div>
                 </div>
-              </div>
-              <div style="text-align: right;">
-                <p class="shop-sub" style="font-size: 0.85rem;"><strong>INVOICE</strong></p>
-                <p class="shop-sub"><strong>No:</strong> <span id="outInvNo">INV-101</span></p>
-                <p class="shop-sub"><strong>Date:</strong> <span id="outDate">--</span></p>
+                <div style="text-align: right;">
+                  <p class="shop-sub" style="font-size: 0.84rem; font-weight: 800; color: #fde68a;">INVOICE / BILL</p>
+                  <p class="shop-sub"><strong>No:</strong> <span id="outInvNo">INV-101</span></p>
+                  <p class="shop-sub"><strong>Date:</strong> <span id="outDate">--</span></p>
+                </div>
               </div>
             </div>
 
             <div class="invoice-body">
               <div class="meta-grid">
                 <div>
-                  <strong>Billed To Customer:</strong><br />
+                  <strong>Customer / Arranged By:</strong><br />
                   <span id="outCustomer" style="font-size: 0.92rem; font-weight: 700;">Walk-in Customer</span><br />
                   <span>Phone: <strong id="outPhone">N/A</strong></span>
                 </div>
                 <div style="text-align: right;">
-                  <strong>Payment Mode:</strong> <span id="outPayMode">UPI / GPay</span><br />
-                  <span id="outUpiLine" style="display: none;"><strong>UPI / GPay:</strong> <span id="outBizUpi"></span></span>
+                  <strong>Payment Mode:</strong> <span id="outPayMode">UPI / GPay</span>
                 </div>
               </div>
 
-              <!-- Travels Route & KM Banner -->
-              <div class="trip-summary-banner" id="outTripBanner"></div>
+              <!-- Travels Trip Details Box on Invoice -->
+              <div class="trip-summary-grid" id="outTripBanner"></div>
 
-              <!-- Itemized Table -->
+              <!-- Itemized Bill Table -->
               <table>
                 <thead>
                   <tr>
-                    <th>Work / Item Description</th>
+                    <th>Particulars / Description</th>
                     <th class="num">Qty/KM</th>
                     <th class="num">Rate</th>
                     <th class="num">Amount</th>
@@ -777,32 +869,33 @@
 
               <!-- Totals Breakdown -->
               <div class="summary-row">
-                <span>Subtotal:</span>
+                <span>Total Amount:</span>
                 <strong id="outSubtotal">₹0.00</strong>
               </div>
-              <div class="summary-row">
+              <div class="summary-row" id="discountRow" style="display: none;">
                 <span>Discount:</span>
                 <strong id="outDiscount">- ₹0.00</strong>
               </div>
-              <div class="summary-row">
+              <div class="summary-row" id="gstRow" style="display: none;">
                 <span>GST (<span id="outGstPercent">0</span>%):</span>
                 <strong id="outGstAmount">₹0.00</strong>
               </div>
+              <div class="summary-row" id="advanceRow" style="display: none;">
+                <span>Less: Advance Paid:</span>
+                <strong id="outAdvance">- ₹0.00</strong>
+              </div>
 
               <div class="total-box">
-                <span>Total Payable</span>
+                <span id="outTotalLabel">Balance Payable</span>
                 <span id="outGrandTotal">₹0.00</span>
               </div>
 
-              <!-- Clean Customer Bill Footer (No Fixr ad here!) -->
               <div class="invoice-footer">
                 <div>
-                  <strong>Thank you for your business!</strong><br />
-                  <span>Customer Receipt & Service Bill</span>
+                  <strong id="outFooterNote">Thank you for your business!</strong><br />
+                  <span id="outTermsLine">Customer Receipt & Service Invoice</span>
                 </div>
-                <div class="sign-box">
-                  <div class="sign-line">Authorized Signature</div>
-                </div>
+                <div class="sign-line" id="outSignLabel">Authorized Sign</div>
               </div>
             </div>
           </div>
@@ -823,9 +916,9 @@
             </button>
           </div>
 
-          <!-- Second Fixr Ad Box at bottom of Website (Hidden when printing) -->
+          <!-- Bottom Fixr Ad Box on Website Only -->
           <div class="fixr-footer-ad no-print">
-            🔧⚡🚗 <strong>Fixr (fixrservice.in)</strong> — Book Verified Electricians, Plumbers & Travels Services Online!
+            📢 <strong>Sponsored by FixrService.in</strong> — Need Electrician, Plumber or Travels Services? Visit <a href="https://fixrservice.in" target="_blank" style="color: #1d4ed8; font-weight: 700;">fixrservice.in</a>
           </div>
         </div>
       </div>
@@ -834,87 +927,136 @@
 
   <!-- PART 3: JAVASCRIPT -->
   <script>
-    const todayStr = new Date().toLocaleDateString('en-IN', {
+    const defaultDate = new Date().toLocaleDateString('en-IN', {
       day: '2-digit',
       month: 'short',
       year: 'numeric'
     });
-    document.getElementById('outDate').innerText = todayStr;
+    document.getElementById('invoiceDate').value = defaultDate;
 
-    // Category Config: Custom SVG Model Images, Themes, Default Titles & Item Presets
+    let uploadedLogoDataUrl = '';
+
     const categoryConfig = {
       travels: {
         badge: '🚗 TRAVELS & CAB SERVICE',
-        defaultTitle: 'Travels & Cab Invoice',
+        defaultTitle: 'Tours & Travels Invoice',
         themeClass: 'theme-travels',
+        terms: '* KM & Time calculated shed to shed. Toll, Parking & Permit extra.',
         svg: `
           <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="32" cy="32" r="30" fill="#DBEAFE"/>
-            <path d="M14 38L18 24C19 21.5 21.2 20 24 20H40C42.8 20 45 21.5 46 24L50 38V46C50 47.1 49.1 48 48 48H45C43.9 48 43 47.1 43 46V44H21V46C21 47.1 20.1 48 19 48H16C14.9 48 14 47.1 14 46V38Z" fill="#1D4ED8"/>
-            <path d="M20 25H44L46.5 34H17.5L20 25Z" fill="#93C5FD"/>
-            <rect x="27" y="15" width="10" height="5" rx="2" fill="#F59E0B"/>
-            <circle cx="21" cy="39" r="3" fill="#FDE047"/>
-            <circle cx="43" cy="39" r="3" fill="#FDE047"/>
+            <path d="M12 38L17 23C18 20.5 20.5 19 23.5 19H40.5C43.5 19 46 20.5 47 23L52 38V47C52 48.1 51.1 49 50 49H46C44.9 49 44 48.1 44 47V44H20V47C20 48.1 19.1 49 18 49H14C12.9 49 12 48.1 12 47V38Z" fill="#1E3A8A"/>
+            <path d="M19 24H45L48 33H16L19 24Z" fill="#93C5FD"/>
+            <rect x="26" y="14" width="12" height="5" rx="2.5" fill="#F59E0B"/>
+            <circle cx="20" cy="39" r="3.5" fill="#FBBF24"/>
+            <circle cx="44" cy="39" r="3.5" fill="#FBBF24"/>
           </svg>
         `,
         presets: [
-          { desc: 'Base Trip Package', qty: 1, rate: 1500 },
-          { desc: 'Extra KM Charge', qty: 20, rate: 14 },
-          { desc: 'Toll & Parking Charges', qty: 1, rate: 180 },
-          { desc: 'Driver Bata', qty: 1, rate: 300 }
+          { desc: 'Base Trip Package / Minimum Tariff', qty: 1, rate: 1300 },
+          { desc: 'Driver Bata', qty: 1, rate: 300 },
+          { desc: 'Excess KM Charge', qty: 20, rate: 14 },
+          { desc: 'Excess Hrs Charge', qty: 1, rate: 150 },
+          { desc: 'Toll & Parking Fee', qty: 1, rate: 180 },
+          { desc: 'Permit Charges', qty: 1, rate: 250 },
+          { desc: 'Hill Charge', qty: 1, rate: 400 }
         ]
       },
       electrician: {
         badge: '⚡ ELECTRICAL SERVICE',
         defaultTitle: 'Electrical Service Invoice',
         themeClass: 'theme-electrician',
+        terms: '* Warranty applies only on manufacturer replacement parts.',
         svg: `
           <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="32" cy="32" r="30" fill="#FEF3C7"/>
-            <path d="M32 10C22.6 10 15 17.6 15 27C15 33.2 18.3 38.6 23.3 41.5L25 47H39L40.7 41.5C45.7 38.6 49 33.2 49 27C49 17.6 41.4 10 32 10Z" fill="#F59E0B"/>
-            <path d="M34 18L25 30H32L30 40L39 28H32L34 18Z" fill="#FFFFFF"/>
+            <path d="M32 10C22.6 10 15 17.6 15 27C15 33.2 18.3 38.6 23.3 41.5L25 47H39L40.7 41.5C45.7 38.6 49 33.2 49 27C49 17.6 41.4 10 32 10Z" fill="#D97706"/>
+            <path d="M34 17L24 30H32L29 41L40 28H32L34 17Z" fill="#FFFFFF"/>
             <rect x="26" y="49" width="12" height="5" rx="2" fill="#78350F"/>
           </svg>
         `,
         presets: [
-          { desc: 'Ceiling Fan Installation', qty: 1, rate: 250 },
-          { desc: 'Switchboard Wiring & Repair', qty: 2, rate: 180 },
-          { desc: 'MCB / Spare Parts Cost', qty: 1, rate: 450 },
-          { desc: 'Electrical Visit Charge', qty: 1, rate: 150 }
+          { desc: 'Ceiling Fan Installation / Repair', qty: 1, rate: 250 },
+          { desc: 'Switchboard Wiring & Point Fix', qty: 2, rate: 180 },
+          { desc: 'MCB / Fuse Change & Testing', qty: 1, rate: 300 },
+          { desc: 'LED Light / Tube Fitting', qty: 2, rate: 120 },
+          { desc: 'Electrical Spare Parts Cost', qty: 1, rate: 450 },
+          { desc: 'Service Visit Charge', qty: 1, rate: 150 }
         ]
       },
       plumber: {
         badge: '🔧 PLUMBING SERVICE',
         defaultTitle: 'Plumbing Service Invoice',
         themeClass: 'theme-plumber',
+        terms: '* Material & PVC fittings charged as per actuals used.',
         svg: `
           <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="32" cy="32" r="30" fill="#E0F2FE"/>
-            <path d="M18 28H38C42.4 28 46 31.6 46 36V40H38V36C38 34.9 37.1 34 36 34H18V28Z" fill="#0284C7"/>
-            <rect x="26" y="18" width="6" height="10" fill="#0369A1"/>
-            <rect x="20" y="14" width="18" height="5" rx="2.5" fill="#0F766E"/>
+            <path d="M16 28H38C42.4 28 46 31.6 46 36V40H38V36C38 34.9 37.1 34 36 34H16V28Z" fill="#0284C7"/>
+            <rect x="25" y="18" width="6" height="10" fill="#0369A1"/>
+            <rect x="19" y="14" width="18" height="5" rx="2.5" fill="#0F766E"/>
             <path d="M42 44C42 44 37 50 37 53C37 55.8 39.2 58 42 58C44.8 58 47 55.8 47 53C47 50 42 44 42 44Z" fill="#38BDF8"/>
           </svg>
         `,
         presets: [
-          { desc: 'Tap / Mixer Replacement', qty: 1, rate: 250 },
-          { desc: 'Pipe Leakage Fixing', qty: 1, rate: 350 },
-          { desc: 'PVC Pipes & Fittings Material', qty: 1, rate: 400 },
-          { desc: 'Motor / Tank Line Work', qty: 1, rate: 300 }
+          { desc: 'Tap / Wall Mixer Replacement', qty: 1, rate: 250 },
+          { desc: 'Pipe Leakage Repair Work', qty: 1, rate: 350 },
+          { desc: 'Washbasin / Sink Blockage Clear', qty: 1, rate: 300 },
+          { desc: 'Water Tank / Motor Float Valve Fix', qty: 1, rate: 400 },
+          { desc: 'PVC Pipes, Solvent & Fittings', qty: 1, rate: 450 },
+          { desc: 'Plumbing Visit Charge', qty: 1, rate: 150 }
         ]
       }
     };
 
+    function selectCategory(catKey) {
+      document.getElementById('serviceType').value = catKey;
+      ['travels', 'electrician', 'plumber'].forEach(k => {
+        const btn = document.getElementById('tab-' + k);
+        btn.className = 'cat-tab' + (k === catKey ? ' active-' + k : '');
+      });
+      onCategoryChange();
+    }
+
+    function handleLogoUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        uploadedLogoDataUrl = e.target.result;
+        try {
+          localStorage.setItem('user_shop_logo', uploadedLogoDataUrl);
+        } catch (err) {}
+        renderArtBox();
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function renderArtBox() {
+      const catKey = document.getElementById('serviceType').value;
+      const cfg = categoryConfig[catKey] || categoryConfig.travels;
+      const box = document.getElementById('categoryArtBox');
+      if (uploadedLogoDataUrl) {
+        box.innerHTML = `<img src="${uploadedLogoDataUrl}" alt="Shop Logo" />`;
+      } else {
+        box.innerHTML = cfg.svg;
+      }
+    }
+
     function loadBizProfile() {
       try {
-        // Clear older default keys so "Fixr" is never forced into the user's bill
         localStorage.removeItem('qb_bizName');
         localStorage.removeItem('fixr_bizName');
 
         document.getElementById('bizName').value = localStorage.getItem('user_shop_name') || '';
         document.getElementById('bizPhone').value = localStorage.getItem('user_shop_phone') || '';
         document.getElementById('bizAddress').value = localStorage.getItem('user_shop_address') || '';
-        document.getElementById('bizUpi').value = localStorage.getItem('user_shop_upi') || '';
+        document.getElementById('bizReg').value = localStorage.getItem('user_shop_reg') || '';
+        const savedBlessing = localStorage.getItem('user_shop_blessing');
+        if (savedBlessing !== null) {
+          document.getElementById('bizBlessing').value = savedBlessing;
+        }
+        uploadedLogoDataUrl = localStorage.getItem('user_shop_logo') || '';
       } catch (e) {}
     }
 
@@ -924,7 +1066,8 @@
         localStorage.setItem('user_shop_name', document.getElementById('bizName').value);
         localStorage.setItem('user_shop_phone', document.getElementById('bizPhone').value);
         localStorage.setItem('user_shop_address', document.getElementById('bizAddress').value);
-        localStorage.setItem('user_shop_upi', document.getElementById('bizUpi').value);
+        localStorage.setItem('user_shop_reg', document.getElementById('bizReg').value);
+        localStorage.setItem('user_shop_blessing', document.getElementById('bizBlessing').value);
       } catch (e) {}
     }
 
@@ -932,7 +1075,14 @@
       document.getElementById('bizName').value = '';
       document.getElementById('bizPhone').value = '';
       document.getElementById('bizAddress').value = '';
-      document.getElementById('bizUpi').value = '';
+      document.getElementById('bizReg').value = '';
+      document.getElementById('bizBlessing').value = '';
+      document.getElementById('logoUpload').value = '';
+      uploadedLogoDataUrl = '';
+      try {
+        localStorage.removeItem('user_shop_logo');
+      } catch (e) {}
+      renderArtBox();
       onBizInput();
     }
 
@@ -940,16 +1090,15 @@
       const catKey = document.getElementById('serviceType').value;
       const cfg = categoryConfig[catKey] || categoryConfig.travels;
 
-      // Update Travels KM Box visibility
       document.getElementById('travelsExtraBox').style.display = catKey === 'travels' ? 'block' : 'none';
 
-      // Update Invoice Model Header Theme & Category Illustration SVG
       const hero = document.getElementById('invoiceHero');
       hero.className = 'invoice-hero ' + cfg.themeClass;
-      document.getElementById('categoryArtBox').innerHTML = cfg.svg;
       document.getElementById('outServiceBadge').innerText = cfg.badge;
+      document.getElementById('outTermsLine').innerText = cfg.terms;
 
-      // Update Preset Chips
+      renderArtBox();
+
       const presetBar = document.getElementById('presetBar');
       presetBar.innerHTML = '';
       cfg.presets.forEach(item => {
@@ -971,10 +1120,10 @@
       const totalKm = Math.max(0, endKm - startKm);
 
       if (totalKm <= 0) {
-        alert('Closing KM must be greater than Start KM!');
+        alert('Closing KM must be greater than Starting KM!');
         return;
       }
-      addItemRow(`Trip Distance (${startKm} to ${endKm} km)`, totalKm, rate);
+      addItemRow(`Kilometer Charge (${startKm} to ${endKm} km)`, totalKm, rate);
     }
 
     function addItemRow(desc = '', qty = 1, rate = '') {
@@ -983,7 +1132,7 @@
       row.className = 'item-row';
 
       row.innerHTML = `
-        <input type="text" class="item-desc" placeholder="Item or work" value="${desc}" oninput="calculateBill()" />
+        <input type="text" class="item-desc" placeholder="Item or charge" value="${desc}" oninput="calculateBill()" />
         <input type="number" class="item-qty" min="1" value="${qty}" oninput="calculateBill()" />
         <input type="number" class="item-rate" min="0" placeholder="0" value="${rate}" oninput="calculateBill()" />
         <button type="button" class="btn-remove" title="Remove row" onclick="removeRow(this)">✕</button>
@@ -1010,50 +1159,67 @@
       const catKey = document.getElementById('serviceType').value;
       const cfg = categoryConfig[catKey] || categoryConfig.travels;
 
-      // Use shop owner's entered name, or fall back to Category Default Title (Never "Fixr")
-      const bizName = document.getElementById('bizName').value.trim() || cfg.defaultTitle;
+      const blessing = document.getElementById('bizBlessing').value.trim();
+      const blessingEl = document.getElementById('outBlessing');
+      blessingEl.innerText = blessing;
+      blessingEl.style.display = blessing ? 'block' : 'none';
+
+      // Never show "Fixr" on the bill — use Shop Owner's name or Category Invoice Title
+      const rawBizName = document.getElementById('bizName').value.trim();
+      const bizName = rawBizName || cfg.defaultTitle;
       const bizPhone = document.getElementById('bizPhone').value.trim();
       const bizAddress = document.getElementById('bizAddress').value.trim();
-      const bizUpi = document.getElementById('bizUpi').value.trim();
+      const bizReg = document.getElementById('bizReg').value.trim();
 
       document.getElementById('outBizName').innerText = bizName;
-      document.getElementById('outBizAddress').innerText = bizAddress;
-      document.getElementById('outBizAddress').style.display = bizAddress ? 'block' : 'none';
+      document.getElementById('outSignLabel').innerText = rawBizName ? 'For ' + rawBizName : 'Authorized Sign';
+
+      const regEl = document.getElementById('outBizReg');
+      regEl.innerText = bizReg;
+      regEl.style.display = bizReg ? 'block' : 'none';
+
+      const addrEl = document.getElementById('outBizAddress');
+      addrEl.innerText = bizAddress;
+      addrEl.style.display = bizAddress ? 'block' : 'none';
 
       document.getElementById('outBizPhone').innerText = bizPhone;
       document.getElementById('outBizPhoneLine').style.display = bizPhone ? 'block' : 'none';
 
-      document.getElementById('outBizUpi').innerText = bizUpi;
-      document.getElementById('outUpiLine').style.display = bizUpi ? 'inline' : 'none';
-
       const invNo = document.getElementById('invoiceNo').value.trim() || 'INV-101';
+      const invDate = document.getElementById('invoiceDate').value.trim() || defaultDate;
       const payMode = document.getElementById('payMode').value;
       const customer = document.getElementById('customerName').value.trim() || 'Walk-in Customer';
       const phone = document.getElementById('customerPhone').value.trim() || 'N/A';
 
       document.getElementById('outInvNo').innerText = invNo;
+      document.getElementById('outDate').innerText = invDate;
       document.getElementById('outPayMode').innerText = payMode;
       document.getElementById('outCustomer').innerText = customer;
       document.getElementById('outPhone').innerText = phone;
 
+      // Travels Trip Sheet Summary Banner
       const tripBanner = document.getElementById('outTripBanner');
       const vehicle = document.getElementById('vehicleInfo').value.trim();
       const route = document.getElementById('tripRoute').value.trim();
       const startKm = parseFloat(document.getElementById('startKm').value) || 0;
       const endKm = parseFloat(document.getElementById('endKm').value) || 0;
       const dist = endKm > startKm ? (endKm - startKm) : 0;
+      const startTime = document.getElementById('startTime').value.trim();
+      const endTime = document.getElementById('endTime').value.trim();
 
-      if (catKey === 'travels' && (vehicle || route || dist > 0)) {
+      if (catKey === 'travels' && (vehicle || route || dist > 0 || startTime || endTime)) {
         tripBanner.style.display = 'block';
-        let parts = [];
-        if (vehicle) parts.push(`<strong>Vehicle:</strong> ${vehicle}`);
-        if (route) parts.push(`<strong>Route:</strong> ${route}`);
-        if (dist > 0) parts.push(`<strong>Meter:</strong> ${startKm}→${endKm} (${dist} KM)`);
-        tripBanner.innerHTML = parts.join(' &nbsp;|&nbsp; ');
+        let lines = [];
+        if (vehicle) lines.push(`<strong>Car No:</strong> ${vehicle}`);
+        if (route) lines.push(`<strong>Report To / Route:</strong> ${route}`);
+        if (dist > 0) lines.push(`<strong>KM:</strong> Start ${startKm} → Close ${endKm} (<strong>Total: ${dist} km</strong>)`);
+        if (startTime || endTime) lines.push(`<strong>Time:</strong> ${startTime || '--'} to ${endTime || '--'}`);
+        tripBanner.innerHTML = lines.join(' &nbsp;|&nbsp; ');
       } else {
         tripBanner.style.display = 'none';
       }
 
+      // Items Table
       const rows = document.querySelectorAll('.item-row');
       const tbody = document.getElementById('outItemsBody');
       tbody.innerHTML = '';
@@ -1077,21 +1243,33 @@
         tbody.appendChild(tr);
       });
 
+      const advance = parseFloat(document.getElementById('advancePaid').value) || 0;
       const discount = parseFloat(document.getElementById('discount').value) || 0;
       const gstPercent = parseFloat(document.getElementById('gstRate').value) || 0;
 
       const taxable = Math.max(0, subtotal - discount);
       const gstAmount = (taxable * gstPercent) / 100;
-      const grandTotal = taxable + gstAmount;
+      const totalWithGst = taxable + gstAmount;
+      const balancePayable = Math.max(0, totalWithGst - advance);
 
       document.getElementById('outSubtotal').innerText = '₹' + subtotal.toFixed(2);
+
+      document.getElementById('discountRow').style.display = discount > 0 ? 'flex' : 'none';
       document.getElementById('outDiscount').innerText = '- ₹' + discount.toFixed(2);
+
+      document.getElementById('gstRow').style.display = gstPercent > 0 ? 'flex' : 'none';
       document.getElementById('outGstPercent').innerText = gstPercent;
       document.getElementById('outGstAmount').innerText = '₹' + gstAmount.toFixed(2);
-      document.getElementById('outGrandTotal').innerText = '₹' + grandTotal.toFixed(2);
+
+      document.getElementById('advanceRow').style.display = advance > 0 ? 'flex' : 'none';
+      document.getElementById('outAdvance').innerText = '- ₹' + advance.toFixed(2);
+
+      document.getElementById('outTotalLabel').innerText = advance > 0 ? 'Balance Payable' : 'Total Payable';
+      document.getElementById('outGrandTotal').innerText = '₹' + balancePayable.toFixed(2);
 
       return {
-        bizName, bizPhone, bizUpi, service: cfg.badge, invNo, payMode, customer, phone, grandTotal, subtotal, discount, gstAmount
+        bizName, bizPhone, bizReg, service: cfg.badge, invNo, invDate, payMode, customer, phone,
+        subtotal, discount, gstAmount, advance, balancePayable, vehicle, route, dist
       };
     }
 
@@ -1109,14 +1287,18 @@
 
       let msg = `*${data.bizName}*\n`;
       msg += `${data.service}\n`;
-      msg += `Invoice: *${data.invNo}* | Date: ${todayStr}\n`;
-      msg += `Customer: *${data.customer}*\n\n`;
-      msg += `*Bill Details:*\n${itemLines}\n`;
+      msg += `Bill No: *${data.invNo}* | Date: ${data.invDate}\n`;
+      msg += `Customer: *${data.customer}*\n`;
+      if (data.vehicle) msg += `Car No: ${data.vehicle}\n`;
+      if (data.route) msg += `Route: ${data.route}\n`;
+      if (data.dist > 0) msg += `Total KM: ${data.dist} km\n`;
+      msg += `\n*Bill Particulars:*\n${itemLines}\n`;
+      msg += `Total Amount: ₹${data.subtotal.toFixed(2)}\n`;
       if (data.discount > 0) msg += `Discount: -₹${data.discount.toFixed(2)}\n`;
       if (data.gstAmount > 0) msg += `GST: ₹${data.gstAmount.toFixed(2)}\n`;
-      msg += `*Total Payable: ₹${data.grandTotal.toFixed(2)}*\n`;
+      if (data.advance > 0) msg += `Advance Paid: -₹${data.advance.toFixed(2)}\n`;
+      msg += `*Balance Payable: ₹${data.balancePayable.toFixed(2)}*\n`;
       msg += `Payment Mode: ${data.payMode}\n`;
-      if (data.bizUpi) msg += `UPI ID: ${data.bizUpi}\n`;
       msg += `\nThank you for your business!`;
 
       const cleanPhone = data.phone.replace(/\D/g, '');
@@ -1134,10 +1316,10 @@
         const history = JSON.parse(localStorage.getItem('qb_history') || '[]');
         history.unshift({
           invNo: data.invNo,
-          date: todayStr,
+          date: data.invDate,
           customer: data.customer,
           service: data.service,
-          total: data.grandTotal.toFixed(2)
+          total: data.balancePayable.toFixed(2)
         });
         localStorage.setItem('qb_history', JSON.stringify(history.slice(0, 10)));
         renderHistory();
@@ -1149,13 +1331,13 @@
         const history = JSON.parse(localStorage.getItem('qb_history') || '[]');
         const container = document.getElementById('historyList');
         if (history.length === 0) {
-          container.innerHTML = 'No saved bills yet. Click "Save Bill" below the invoice.';
+          container.innerHTML = 'No saved bills yet. Tap "Save Bill" below the invoice.';
           return;
         }
         container.innerHTML = history.map(item => `
           <div class="history-item">
             <span><strong>${item.invNo}</strong> — ${item.customer} (${item.service})</span>
-            <strong style="color: var(--accent);">₹${item.total}</strong>
+            <strong style="color: var(--success);">₹${item.total}</strong>
           </div>
         `).join('');
       } catch (e) {}
@@ -1181,6 +1363,9 @@
       document.getElementById('tripRoute').value = '';
       document.getElementById('startKm').value = '';
       document.getElementById('endKm').value = '';
+      document.getElementById('startTime').value = '';
+      document.getElementById('endTime').value = '';
+      document.getElementById('advancePaid').value = '0';
       document.getElementById('discount').value = '0';
 
       document.getElementById('itemsContainer').innerHTML = '';
@@ -1189,8 +1374,7 @@
 
     loadBizProfile();
     onCategoryChange();
-    addItemRow('Base Trip Package', 1, 1500);
-    addItemRow('Toll & Parking Charges', 1, 180);
+    addItemRow('Base Trip Package / Minimum Tariff', 1, 1300);
     renderHistory();
   </script>
 </body>
