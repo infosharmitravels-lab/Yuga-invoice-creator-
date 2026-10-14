@@ -1,2 +1,2 @@
-# Yuga-invoice-creator-
+# Fixr-invoice-creator-
 Invoice creator 
